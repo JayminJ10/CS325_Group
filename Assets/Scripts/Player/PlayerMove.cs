@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isStaminaDepleting = true;   // Flag to control stamina depletion
     private float initialLightIntensity;
     public Light playerLight; // Reference to the player's light
-    public Slider staminaSlider; // Reference to the UI Slider
 
 
 
@@ -44,8 +43,6 @@ public class PlayerMovement : MonoBehaviour
         {
             currentStamina -= staminaDrainRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-            // Update stamina UI
-            staminaSlider.value = currentStamina;
 
             if (currentStamina == 0)
             {
