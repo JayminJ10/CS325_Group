@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float maxStamina = 100f;          // Maximum stamina
     public float currentStamina;             // Current stamina level
-    public float staminaDrainRate = 10f;     // Stamina drained per second
-    public float staminaRegenRate = 5f;      // Stamina regenerated per second
+    public float staminaDrainRate = 7f;     // Stamina drained per second
+    public float staminaRegenRate = 12f;      // Stamina regenerated per second
     public bool isStaminaDepleting = true;   // Flag to control stamina depletion
 
     private float initialLightIntensity;
@@ -120,9 +120,9 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         // Check if the player leaves the ground
-        if (collision.gameObject.CompareTag("Ground"))
-        {
+        //if (collision.gameObject.CompareTag("Ground"))
+        //{
             isGrounded = false;
-        }
+        //}
     }
 }
