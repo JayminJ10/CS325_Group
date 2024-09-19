@@ -17,29 +17,41 @@ public class PlayerMovement : MonoBehaviour
     public bool isStaminaDepleting = true;   // Flag to control stamina depletion
 
     private float initialLightIntensity;
-    public Light playerLight; // Reference to the player's light
+    private float initialSecondaryLightIntensity;
+
+    public Light playerLight;            // Reference to the player's main light
+    public Light secondaryLight;         // Reference to the secondary light (e.g., a light illuminating the area)
 
     private Transform cameraTransform;
 
     private float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
 
+    private Animation anim;  // Reference to the Animation component for legacy animations
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         currentStamina = maxStamina; // Start with full stamina
+
+        // Get initial light intensities
         initialLightIntensity = playerLight.intensity;
+        initialSecondaryLightIntensity = secondaryLight.intensity;
 
         // Get the main camera's transform
         cameraTransform = Camera.main.transform;
+
+        // Get the Animation component for legacy animations
+        anim = GetComponent<Animation>();
+
+        // Start with the idle animation (replace "idle" with the name of your idle animation)
+        anim.Play("Idle");
     }
 
     void Update()
     {
         // Ground check
         isGrounded = controller.isGrounded;
-
-
 
         // Get input axes
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
@@ -61,17 +73,32 @@ public class PlayerMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
+            // Play walking animation (replace "walk" with the name of your walk animation)
+            if (!anim.IsPlaying("Walk"))
+            {
+                anim.CrossFade("Walk");
+            }
+
             isStaminaDepleting = true;
         }
         else
         {
             isStaminaDepleting = false;
+
+            // Play idle animation when not moving (replace "idle" with the name of your idle animation)
+            if (!anim.IsPlaying("Idle"))
+            {
+                anim.CrossFade("Idle");
+            }
         }
 
         // Jumping
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+
+            // Play jump animation (replace "jump" with the name of your jump animation)
+            anim.CrossFade("Jump");
         }
         else
         {
@@ -105,8 +132,9 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleStaminaDepletion()
     {
-        // Turn off the light when stamina depletes
+        // Turn off both lights when stamina depletes
         playerLight.enabled = false;
+        secondaryLight.enabled = false;
     }
 
     void UpdateLightIntensity()
@@ -116,8 +144,12 @@ public class PlayerMovement : MonoBehaviour
             if (!playerLight.enabled)
                 playerLight.enabled = true;
 
-            // Adjust light intensity proportionally to stamina
+            if (!secondaryLight.enabled)
+                secondaryLight.enabled = true;
+
+            // Adjust both lights' intensity proportionally to stamina
             playerLight.intensity = (currentStamina / maxStamina) * initialLightIntensity;
+            secondaryLight.intensity = (currentStamina / maxStamina) * initialSecondaryLightIntensity;
         }
     }
 }
