@@ -38,7 +38,7 @@ public class ResolutionManager : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
 
         // Set initial fullscreen state
-        fullscreenToggle.isOn = Screen.fullScreen;
+        //fullscreenToggle.isOn = Screen.fullScreen;
 
         // Add listeners to handle resolution and fullscreen changes
         resolutionDropdown.onValueChanged.AddListener(SetResolution);

@@ -3,8 +3,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
-    public float jumpForce = 5f;
-    private Rigidbody rb;
+    public float jumpForce = 7f;
+    public float downForce = 0.03f;
+    private CharacterController controller;
+    private Vector3 velocity;
+    public float gravity = -9.81f;
     private bool isGrounded;
 
     public float maxStamina = 100f;          // Maximum stamina
@@ -21,13 +24,9 @@ public class PlayerMovement : MonoBehaviour
     private float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
 
-    private bool jumpPressed; // New variable to detect if jump was pressed
-
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.interpolation = RigidbodyInterpolation.Interpolate; // Enable interpolation for smoother movement
-
+        controller = GetComponent<CharacterController>();
         currentStamina = maxStamina; // Start with full stamina
         initialLightIntensity = playerLight.intensity;
 
@@ -37,16 +36,56 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Handle movement inputs here
-        HandleMovementInput();
+        // Ground check
+        isGrounded = controller.isGrounded;
 
-        // Detect jump input here in Update()
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (isGrounded && velocity.y < 0)
         {
-            jumpPressed = true; // Set this to true, so we handle the jump in FixedUpdate()
+            velocity.y = -2f; // Slight downward force to keep grounded
         }
 
-        // Drain stamina over time
+        // Get input axes
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxisRaw("Vertical");
+
+        // Calculate the direction relative to the camera
+        Vector3 direction = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            // Calculate the target angle and smooth the rotation
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+            // Rotate the player
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            // Move the player
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+
+            isStaminaDepleting = true;
+        }
+        else
+        {
+            isStaminaDepleting = false;
+        }
+
+        // Jumping
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+        }
+        else
+        {
+            velocity.y -= downForce;
+        }
+
+        // Apply gravity
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
+        // Stamina handling...
         if (isStaminaDepleting && currentStamina > 0)
         {
             currentStamina -= staminaDrainRate * Time.deltaTime;
@@ -59,89 +98,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!isStaminaDepleting && currentStamina < maxStamina)
         {
-            // Regenerate stamina when not depleting
             currentStamina += staminaRegenRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
 
         // Update light intensity based on stamina
         UpdateLightIntensity();
-    }
-
-    void FixedUpdate()
-    {
-        // Handle movement here
-        MoveCharacter();
-
-        // Handle jumping here in FixedUpdate
-        if (jumpPressed && isGrounded)
-        {
-            Jump();
-            jumpPressed = false; // Reset the jump input after applying force
-        }
-    }
-
-    private void HandleMovementInput()
-    {
-        // Get input axes
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        // Calculate the direction relative to the camera
-        Vector3 direction = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
-
-        // If there is input
-        if (direction.magnitude >= 0.1f)
-        {
-            isStaminaDepleting = true;
-        }
-        else
-        {
-            isStaminaDepleting = false;
-        }
-    }
-
-    private void MoveCharacter()
-    {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        Vector3 direction = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            rb.MovePosition(rb.position + moveDir.normalized * speed * Time.fixedDeltaTime);
-        }
-    }
-
-    private void Jump()
-    {
-        // Apply force for jumping
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        // Check if the player is on the ground
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        // Check if the player leaves the ground
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
     }
 
     void HandleStaminaDepletion()
