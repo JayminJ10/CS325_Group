@@ -63,6 +63,7 @@ public class EnemyState : MonoBehaviour
             //Cast ray toward player and log possible hit
             ray = new Ray(transform.position, playerPos);
             bool rayBlocked = Physics.Raycast(ray, out hit, distToPlayer);
+            Debug.DrawRay(transform.position, playerPos);
 
             //Wall is between player and enemy
             //Currently does nothing, I just need it to override other conditions
