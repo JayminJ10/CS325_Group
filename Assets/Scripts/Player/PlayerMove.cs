@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
-    public float jumpForce = 7f;
-    public float downForce = 0.03f;
+    public float jumpForce = 9f;
+    public float downForce = 0.01f;
     private CharacterController controller;
     private Vector3 velocity;
     public float gravity = -9.81f;
@@ -39,10 +39,7 @@ public class PlayerMovement : MonoBehaviour
         // Ground check
         isGrounded = controller.isGrounded;
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f; // Slight downward force to keep grounded
-        }
+
 
         // Get input axes
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
