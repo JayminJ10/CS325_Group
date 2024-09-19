@@ -1,6 +1,6 @@
-# Candle Quest
+# Wander Light
 
-Welcome to **Candle Quest** — a captivating 3D platformer where you play as a living candle navigating through a dark and mysterious world filled with puzzles and challenges. Manage your stamina wisely, for as your flame flickers, so does your ability to see and progress through the shadows.
+Welcome to **Wander Light** — a captivating 3D platformer where you play as a living candle navigating through a dark and mysterious world filled with puzzles and challenges. Manage your stamina wisely, for as your flame flickers, so does your ability to see and progress through the shadows.
 
 ---
 
@@ -22,7 +22,7 @@ Welcome to **Candle Quest** — a captivating 3D platformer where you play as a 
 
 ## Game Description
 
-In **Candle Quest**, you embody a courageous candle on a quest through a world engulfed in darkness. Illuminate your path, solve intricate puzzles, and overcome platforming challenges. But beware — your flame is your lifeline. As you move, your stamina depletes, causing your light to dim. Replenish your energy to keep the darkness at bay and continue your journey.
+In **Wander Light**, you embody a courageous candle on a quest through a world engulfed in darkness. Illuminate your path, solve intricate puzzles, and overcome platforming challenges. But beware — your flame is your lifeline. As you move, your stamina depletes, causing your light to dim. Replenish your energy to keep the darkness at bay and continue your journey.
 
 ---
 
@@ -67,7 +67,7 @@ In **Candle Quest**, you embody a courageous candle on a quest through a world e
 ## Installation
 
 1. **Download the Game**:
-   - [Candle Quest Download Link](#) *(Link to be provided once the game is available)*
+   - [Wander Light Download Link](#) *(Link to be provided once the game is available)*
 2. **Extract Files**:
    - Unzip the downloaded file to your desired installation directory.
 3. **Run the Game**:
@@ -110,7 +110,7 @@ In **Candle Quest**, you embody a courageous candle on a quest through a world e
 
 ## License
 
-*Candle Quest* is a passion project developed for entertainment purposes.
+*Wander Light* is a passion project developed for entertainment purposes.
 
 - **Personal Use**: You are free to download and play the game for personal enjoyment.
 - **Distribution**: Please do not redistribute the game without permission.
