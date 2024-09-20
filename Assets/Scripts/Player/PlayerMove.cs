@@ -11,9 +11,17 @@ public class PlayerMovement : MonoBehaviour
     public float mass = 2.5f;
     private bool isGrounded;
 
+    // Dashing
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.1f;
+    public float dashCooldown = 1f;
+    private float dashTimer;
+    private float dashCooldownTimer;
+    private bool isDashing = false;
+
     public float maxStamina = 100f;          // Maximum stamina
     public float currentStamina;             // Current stamina level
-    public float staminaDrainRate = 7f;      // Stamina drained per second
+    public float staminaDrainRate = 4f;      // Stamina drained per second
     public float staminaRegenRate = 12f;     // Stamina regenerated per second
     public bool isStaminaDepleting = true;   // Flag to control stamina depletion
 
@@ -60,7 +68,10 @@ public class PlayerMovement : MonoBehaviour
 
             // Move the player
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+
+            float currentSpeed = isDashing ? dashSpeed : speed;
+            controller.Move(moveDir.normalized * currentSpeed * Time.deltaTime);
+            //controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
             if (!anim.IsPlaying("Walk"))
             {
@@ -76,6 +87,27 @@ public class PlayerMovement : MonoBehaviour
             if (!anim.IsPlaying("Idle"))
             {
                 anim.CrossFade("Idle");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0)
+        {
+            StartDash();
+        }
+
+        // Dash cooldown timer
+        if (dashCooldownTimer > 0)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+        }
+
+        // Handle dash duration
+        if (isDashing)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0)
+            {
+                EndDash();
             }
         }
 
@@ -111,6 +143,19 @@ public class PlayerMovement : MonoBehaviour
             currentStamina += staminaRegenRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
+    }
+
+    private void StartDash()
+    {
+        currentStamina -= staminaDrainRate * 2;
+        isDashing = true;
+        dashTimer = dashDuration;
+        dashCooldownTimer = dashCooldown;
+    }
+
+    private void EndDash()
+    {
+        isDashing = false;
     }
 
     void HandleStaminaDepletion()

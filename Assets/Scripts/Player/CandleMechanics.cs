@@ -66,6 +66,9 @@ public class CandleMechanics : MonoBehaviour
         // If the light is on and stamina is above 0
         if (playerMovement.currentStamina > 0 && isLightOn)
         {
+            // Turn on both lights when stamina isn't zero
+            playerLight.enabled = true;
+            secondaryLight.enabled = true;
             // Apply a flicker effect based on Perlin noise
             float flickerNoise = Mathf.PerlinNoise(Time.time * flickerSpeed, 0);
             float flickerIntensity = Mathf.Lerp(minFlickerIntensity, maxFlickerIntensity, flickerNoise);

@@ -910,9 +910,12 @@ MonoBehaviour:
   downForce: 0.1
   gravity: -9.81
   mass: 2
+  dashSpeed: 20
+  dashDuration: 0.1
+  dashCooldown: 1
   maxStamina: 100
   currentStamina: 0
-  staminaDrainRate: 7
+  staminaDrainRate: 4
   staminaRegenRate: 12
   isStaminaDepleting: 1
   turnSmoothTime: 0.1
