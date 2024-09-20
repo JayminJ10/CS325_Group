@@ -340,9 +340,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1502017521}
   state: 0
-  attackRangeMax: 10
-  chaseRangeMax: 20
-  searchCooldown: 20
+  attackRangeMax: 15
+  chaseRangeMax: 40
+  searchCooldown: 100
   playerLightOn: 0
 --- !u!114 &164285946
 MonoBehaviour:
@@ -356,11 +356,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1887f406abb38046b10dd8c842dcc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedMax: 10
+  currentState: 0
+  target: {x: 0, y: 0, z: 0}
+  speed: 0
   waypoints:
   - {fileID: 948728689}
   - {fileID: 2036343884}
   - {fileID: 1435769612}
   - {fileID: 1474219799}
+  player: {fileID: 1502017521}
 --- !u!54 &164285947
 Rigidbody:
   m_ObjectHideFlags: 0

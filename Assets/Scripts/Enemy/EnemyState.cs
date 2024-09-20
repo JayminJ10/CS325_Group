@@ -18,8 +18,8 @@ public class EnemyState : MonoBehaviour
     
     public GameObject player;                          //Store player reference
     public State state;                                //Current enemy state
-    public float attackRangeMax = 10f;                 //Attack range radius
-    public float chaseRangeMax = 20f;                  //Chase range radius
+    public float attackRangeMax = 15f;                 //Attack range radius
+    public float chaseRangeMax = 40f;                  //Chase range radius
     public float searchCooldown = searchCooldownMax;   //Search cooldown
     public bool playerLightOn;                         //Status of the player light
 
@@ -38,7 +38,7 @@ public class EnemyState : MonoBehaviour
         Light light = player.GetComponent<PlayerMovement>().playerLight;
         playerLightOn = light.intensity > 0.2f && light.isActiveAndEnabled;
         Vector3 playerPos = player.GetComponent<Transform>().position;
-        distToPlayer = playerPos.magnitude;
+        distToPlayer = Vector3.Distance(transform.position, playerPos);
         RaycastHit hit;        
         
         //Attack state, overrules all other conditions
@@ -48,7 +48,7 @@ public class EnemyState : MonoBehaviour
             //Handle all attack functionalities
             //Do not change state unless attack animation finished
             //If player dead, return to WANDER
-            //Else, search
+            //Else, SEARCH
         }
 
         //Chase state, overrules all other conditions
@@ -82,6 +82,7 @@ public class EnemyState : MonoBehaviour
                 state = State.SEARCH;
                 searchCooldown = searchCooldownMax;
             }
+
             //Default to WANDER
             else { state = State.WANDER; }
         }
