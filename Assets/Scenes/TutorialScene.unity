@@ -902,9 +902,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpForce: 4
-  downForce: 0.02
+  jumpForce: 7
+  downForce: 0.1
   gravity: -9.81
+  mass: 2
   maxStamina: 100
   currentStamina: 0
   staminaDrainRate: 7

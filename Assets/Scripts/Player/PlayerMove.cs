@@ -3,11 +3,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
-    public float jumpForce = 9f;
-    public float downForce = 0.01f;
+    public float jumpForce = 7f;
+    public float downForce = 0.1f;
     private CharacterController controller;
     private Vector3 velocity;
     public float gravity = -9.81f;
+    public float mass = 2.5f;
     private bool isGrounded;
 
     public float maxStamina = 100f;          // Maximum stamina
@@ -33,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
         // Get the Animation component for legacy animations
         anim = GetComponent<Animation>();
 
-        // Start with the idle animation (replace "idle" with the name of your idle animation)
         anim.Play("Idle");
     }
 
@@ -62,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
-            // Play walking animation (replace "walk" with the name of your walk animation)
             if (!anim.IsPlaying("Walk"))
             {
                 anim.CrossFade("Walk");
@@ -74,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isStaminaDepleting = false;
 
-            // Play idle animation when not moving (replace "idle" with the name of your idle animation)
             if (!anim.IsPlaying("Idle"))
             {
                 anim.CrossFade("Idle");
@@ -86,19 +84,18 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
 
-            // Play jump animation (replace "jump" with the name of your jump animation)
             anim.CrossFade("Jump");
         }
         else
         {
-            velocity.y -= downForce;
+            velocity.y -= downForce + mass * Time.deltaTime;
         }
 
         // Apply gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        // Stamina handling...
+        // Stamina handling
         if (isStaminaDepleting && currentStamina > 0)
         {
             currentStamina -= staminaDrainRate * Time.deltaTime;
