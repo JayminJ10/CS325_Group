@@ -208,6 +208,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 547695625}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 547695626}
   m_SourcePrefab: {fileID: 100100000, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
 --- !u!1 &83615619
 GameObject:
@@ -907,8 +910,6 @@ MonoBehaviour:
   staminaDrainRate: 7
   staminaRegenRate: 12
   isStaminaDepleting: 1
-  playerLight: {fileID: 8775804232813336914}
-  secondaryLight: {fileID: 1882102300}
   turnSmoothTime: 0.1
 --- !u!143 &547695622
 CharacterController:
@@ -982,6 +983,24 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &547695626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547695619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51cf3cdc6f687da48a9498aa6154bdbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 547695621}
+  playerLight: {fileID: 8775804232813336914}
+  secondaryLight: {fileID: 1882102300}
+  minFlickerIntensity: 0.8
+  maxFlickerIntensity: 1.2
+  flickerSpeed: 5
 --- !u!1 &566875392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,7 +2278,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1882102299}
   - component: {fileID: 1882102300}
-  - component: {fileID: 1882102301}
   m_Layer: 0
   m_Name: Face Light
   m_TagString: Untagged
@@ -2344,22 +2362,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &1882102301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882102298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3105c8366ae9255449ba32a0d1fdd598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLight: {fileID: 1882102300}
-  minIntensity: 0.8
-  maxIntensity: 1.2
-  flickerSpeed: 5
 --- !u!1 &1930593744
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,22 +2713,6 @@ Transform:
   - {fileID: 1599995496}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1450761461761106232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6718074509310408534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3105c8366ae9255449ba32a0d1fdd598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLight: {fileID: 8775804232813336914}
-  minIntensity: 0.8
-  maxIntensity: 1.5
-  flickerSpeed: 5
 --- !u!4 &5612529674439193610
 Transform:
   m_ObjectHideFlags: 0
@@ -2752,7 +2738,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5612529674439193610}
   - component: {fileID: 8775804232813336914}
-  - component: {fileID: 1450761461761106232}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -2814,7 +2799,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}

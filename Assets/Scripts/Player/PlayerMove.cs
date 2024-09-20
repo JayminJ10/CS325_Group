@@ -16,14 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float staminaRegenRate = 12f;     // Stamina regenerated per second
     public bool isStaminaDepleting = true;   // Flag to control stamina depletion
 
-    private float initialLightIntensity;
-    private float initialSecondaryLightIntensity;
-
-    public Light playerLight;            // Reference to the player's main light
-    public Light secondaryLight;         // Reference to the secondary light (e.g., a light illuminating the area)
-
     private Transform cameraTransform;
-
     private float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
 
@@ -33,10 +26,6 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         currentStamina = maxStamina; // Start with full stamina
-
-        // Get initial light intensities
-        initialLightIntensity = playerLight.intensity;
-        initialSecondaryLightIntensity = secondaryLight.intensity;
 
         // Get the main camera's transform
         cameraTransform = Camera.main.transform;
@@ -125,31 +114,10 @@ public class PlayerMovement : MonoBehaviour
             currentStamina += staminaRegenRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
-
-        // Update light intensity based on stamina
-        UpdateLightIntensity();
     }
 
     void HandleStaminaDepletion()
     {
-        // Turn off both lights when stamina depletes
-        playerLight.enabled = false;
-        secondaryLight.enabled = false;
-    }
-
-    void UpdateLightIntensity()
-    {
-        if (currentStamina > 0)
-        {
-            if (!playerLight.enabled)
-                playerLight.enabled = true;
-
-            if (!secondaryLight.enabled)
-                secondaryLight.enabled = true;
-
-            // Adjust both lights' intensity proportionally to stamina
-            playerLight.intensity = (currentStamina / maxStamina) * initialLightIntensity;
-            secondaryLight.intensity = (currentStamina / maxStamina) * initialSecondaryLightIntensity;
-        }
+        // You can leave this empty since CandleMechanics will now handle turning off lights.
     }
 }

@@ -35,7 +35,7 @@ public class EnemyState : MonoBehaviour
     void Update()
     {
         //Update player information
-        Light light = player.GetComponent<PlayerMovement>().playerLight;
+        Light light = player.GetComponent<CandleMechanics>().playerLight;
         playerLightOn = light.intensity > 0.2f && light.isActiveAndEnabled;
         Vector3 playerPos = player.GetComponent<Transform>().position;
         distToPlayer = Vector3.Distance(transform.position, playerPos);
