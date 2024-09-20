@@ -356,10 +356,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1887f406abb38046b10dd8c842dcc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMax: 10
-  currentState: 0
-  target: {x: 0, y: 0, z: 0}
-  speed: 0
   waypoints:
   - {fileID: 948728689}
   - {fileID: 2036343884}
@@ -403,7 +399,6 @@ GameObject:
   m_Component:
   - component: {fileID: 243544670}
   - component: {fileID: 243544668}
-  - component: {fileID: 243544669}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -473,22 +468,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &243544669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243544667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3105c8366ae9255449ba32a0d1fdd598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLight: {fileID: 243544668}
-  minIntensity: 0.8
-  maxIntensity: 1.5
-  flickerSpeed: 5
 --- !u!4 &243544670
 Transform:
   m_ObjectHideFlags: 0
@@ -745,7 +724,6 @@ GameObject:
   m_Component:
   - component: {fileID: 922361653}
   - component: {fileID: 922361651}
-  - component: {fileID: 922361652}
   m_Layer: 0
   m_Name: Face Light
   m_TagString: Untagged
@@ -815,22 +793,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &922361652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 922361650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3105c8366ae9255449ba32a0d1fdd598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLight: {fileID: 922361651}
-  minIntensity: 0.8
-  maxIntensity: 1.2
-  flickerSpeed: 5
 --- !u!4 &922361653
 Transform:
   m_ObjectHideFlags: 0
@@ -1251,6 +1213,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1502017523}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1502017527}
   m_SourcePrefab: {fileID: 100100000, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
 --- !u!1 &1502017521 stripped
 GameObject:
@@ -1301,8 +1266,6 @@ MonoBehaviour:
   staminaDrainRate: 7
   staminaRegenRate: 12
   isStaminaDepleting: 1
-  playerLight: {fileID: 243544668}
-  secondaryLight: {fileID: 922361651}
   turnSmoothTime: 0.1
 --- !u!143 &1502017525
 CharacterController:
@@ -1353,6 +1316,24 @@ CapsuleCollider:
   m_Height: 6
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1502017527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502017521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51cf3cdc6f687da48a9498aa6154bdbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 1502017524}
+  playerLight: {fileID: 243544668}
+  secondaryLight: {fileID: 922361651}
+  minFlickerIntensity: 0.8
+  maxFlickerIntensity: 1.2
+  flickerSpeed: 5
 --- !u!1 &1988990221
 GameObject:
   m_ObjectHideFlags: 0
