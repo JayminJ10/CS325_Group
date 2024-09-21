@@ -1545,18 +1545,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpForce: 7
-  downForce: 0.1
+  jumpForce: 3
   gravity: -9.81
-  mass: 2
-  dashSpeed: 20
-  dashDuration: 0.1
+  mass: 2.5
+  dashSpeed: 10
+  dashDuration: 0.25
   dashCooldown: 1
   maxStamina: 100
-  currentStamina: 0
+  currentStamina: 100
   staminaDrainRate: 4
   staminaRegenRate: 12
-  isStaminaDepleting: 1
+  isStaminaDepleting: 0
   turnSmoothTime: 0.1
 --- !u!143 &547695622
 CharacterController:

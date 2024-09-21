@@ -4,11 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public float jumpForce = 7f;
-    public float downForce = 0.1f;
-    private CharacterController controller;
-    private Vector3 velocity;
     public float gravity = -9.81f;
     public float mass = 2.5f;
+    private CharacterController controller;
+    private Vector3 velocity;
     private bool isGrounded;
 
     // Dashing
@@ -71,7 +70,6 @@ public class PlayerMovement : MonoBehaviour
 
             float currentSpeed = isDashing ? dashSpeed : speed;
             controller.Move(moveDir.normalized * currentSpeed * Time.deltaTime);
-            //controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
             if (!anim.IsPlaying("Walk"))
             {
@@ -115,17 +113,23 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-
             anim.CrossFade("Jump");
         }
-        else
+
+        // Apply gravity only when not grounded
+        if (!isGrounded)
         {
-            velocity.y -= downForce + mass * Time.deltaTime;
+            velocity.y += gravity * Time.deltaTime * mass;
         }
 
-        // Apply gravity
-        velocity.y += gravity * Time.deltaTime;
+        // Apply the velocity to the CharacterController
         controller.Move(velocity * Time.deltaTime);
+
+        // Reset vertical velocity when grounded
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;  // Small value to ensure the player stays grounded
+        }
 
         // Stamina handling
         if (isStaminaDepleting && currentStamina > 0)
@@ -160,6 +164,6 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleStaminaDepletion()
     {
-        // You can leave this empty since CandleMechanics will now handle turning off lights.
+        // Optional logic when stamina depletes
     }
 }
