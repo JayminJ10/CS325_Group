@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     public float staminaDrainRate = 4f;      // Stamina drained per second
     public float staminaRegenRate = 12f;     // Stamina regenerated per second
     public bool isStaminaDepleting = true;   // Flag to control stamina depletion
+    public Vector3 spawnPoint;   // Define the spawn point
+    public float fallThreshold = -10f;  // Threshold to detect when the player falls
 
     private Transform cameraTransform;
     private float turnSmoothVelocity;
@@ -147,6 +149,11 @@ public class PlayerMovement : MonoBehaviour
             currentStamina += staminaRegenRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
+         // Check if the player has fallen below the threshold
+        if (transform.position.y < fallThreshold)
+        {
+            RespawnPlayer();  // Send player back to the spawn point
+        }
     }
 
     private void StartDash()
@@ -166,4 +173,19 @@ public class PlayerMovement : MonoBehaviour
     {
         // Optional logic when stamina depletes
     }
+     // Method to reset the player to the spawn point
+    void RespawnPlayer()
+    {
+        // Reset player's position to the spawn point
+        transform.position = spawnPoint;
+
+        // Optionally reset vertical velocity
+        velocity.y = 0f;
+    }
+    public void SetSpawnPoint(Vector3 newSpawnPoint)
+    {
+    spawnPoint = newSpawnPoint;
+    Debug.Log("New spawn point set at: " + spawnPoint);
+    }
+
 }
