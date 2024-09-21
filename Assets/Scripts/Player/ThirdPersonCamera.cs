@@ -51,9 +51,5 @@ public class ThirdPersonCamera : MonoBehaviour
             // Look at the target
             transform.LookAt(target.position + offset);
         }
-
-        float currentTerrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
-        if (transform.position.y < currentTerrainHeight)
-            transform.position = new Vector3(transform.position.x, currentTerrainHeight, transform.position.z);
     }
 }
