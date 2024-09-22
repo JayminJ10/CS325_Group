@@ -14,13 +14,15 @@ public enum State //All possible states
 
 public class EnemyState : MonoBehaviour
 {
-    static public float searchCooldownMax = 100f;      //Max value of search cooldown
+    static public float searchCooldownMax = 20f;      //Max value of search cooldown
+    static public float searchTimerMax = 10f;         //Max value of search timer
     
     public GameObject player;                          //Store player reference
     public State state;                                //Current enemy state
-    public float attackRangeMax = 15f;                 //Attack range radius
+    public float attackRangeMax = 10f;                 //Attack range radius
     public float chaseRangeMax = 40f;                  //Chase range radius
     public float searchCooldown = searchCooldownMax;   //Search cooldown
+    public float searchTimer = searchTimerMax;         //Duration of search state
     public bool playerLightOn;                         //Status of the player light
 
     private float distToPlayer;                        //Store distance to player
@@ -39,31 +41,35 @@ public class EnemyState : MonoBehaviour
         playerLightOn = light.intensity > 0.2f && light.isActiveAndEnabled;
         Vector3 playerPos = player.GetComponent<Transform>().position;
         distToPlayer = Vector3.Distance(transform.position, playerPos);
+        
         RaycastHit hit;        
         
         //Attack state, overrules all other conditions
         if (state == State.ATTACK)
         {
-            //WARNING: CURRENTLY ONCE STATE IS ENTERED, CANNOT BE CHANGED (9/19)
-            //Handle all attack functionalities
-            //Do not change state unless attack animation finished
-            //If player dead, return to WANDER
-            //Else, SEARCH
+            //With no enemy animations or player death scenarios, 
+            //all this does is return to search mode
+            Debug.DrawRay(transform.position, (playerPos - transform.position), Color.red);
+            state = State.SEARCH;
+            searchCooldown = 0;
+            searchTimer = 0;
         }
 
         //Chase state, overrules all other conditions
         else if (state == State.CHASE)
         {
             if (distToPlayer <= attackRangeMax) { state = State.ATTACK; }
+            Debug.DrawRay(transform.position, (playerPos - transform.position), Color.yellow);
+
         }
 
         //Player is within chase range with any state
         else if (distToPlayer <= chaseRangeMax)
         {
             //Cast ray toward player and log possible hit
-            ray = new Ray(transform.position, playerPos);
+            ray = new Ray(transform.position, (playerPos - transform.position));
             bool rayBlocked = Physics.Raycast(ray, out hit, distToPlayer);
-            Debug.DrawRay(transform.position, playerPos);
+            Debug.DrawRay(transform.position, (playerPos - transform.position), Color.white);
 
             //Wall is between player and enemy
             //Currently does nothing, I just need it to override other conditions
@@ -71,16 +77,20 @@ public class EnemyState : MonoBehaviour
             if (rayBlocked && hit.collider.CompareTag("Wall")) { } 
 
             //Attack state
+            //IMPORTANT: Attack will trigger even if light is off,
+            //so player can't just run up to enemy
             else if (distToPlayer <= attackRangeMax) { state = State.ATTACK; }
 
             //Chase state
             else if (playerLightOn) { state = State.CHASE; }
 
             //Search state
-            else if (searchCooldown <= 0)
+            //Starts if countdown at zero, and stays until search timer is complete
+            else if (searchCooldown <= 0 || searchTimer > 0)
             {
                 state = State.SEARCH;
                 searchCooldown = searchCooldownMax;
+                if (searchTimer <= 0) { searchTimer = searchTimerMax; }
             }
 
             //Default to WANDER
@@ -93,9 +103,11 @@ public class EnemyState : MonoBehaviour
             //Player is outside chase range, seek or wander states
             if (playerLightOn) { state = State.SEEK; }
             else { state = State.WANDER; }
+            Debug.DrawRay(transform.position, (playerPos - transform.position), Color.blue);
         }
 
         //Reduce search cooldown
-        searchCooldown -= 1 *Time.deltaTime;
+        searchCooldown = (searchCooldown <= 0) ? 0 : searchCooldown - 1 * Time.deltaTime;
+        searchTimer = (searchTimer <= 0) ? 0 : searchTimer - 1 * Time.deltaTime;
     }
 }

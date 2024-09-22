@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
     private float speedMax;                   //Maximum speed
     private State currentState;               //Current state
-    private Vector3 target;                   //Target to move toward
-    private float speed;                      //Current speed
-    private Vector3 startPos;                //Starting position
-    private int currentWaypoint;             //Waypoint currently navigating to
+    private Vector3 startPos;                 //Starting position
+    private int currentWaypoint;              //Waypoint currently navigating to
+    private NavMeshAgent agent;               //Nav mesh controller
 
     [SerializeField]
     private List<Transform> waypoints;        //Waypoints to navigate to
@@ -24,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
         startPos = transform.position;
         //Ensure speed is relative to player speed
         speedMax = player.GetComponent<PlayerMovement>().speed;
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -38,48 +41,70 @@ public class EnemyMovement : MonoBehaviour
             case State.SEARCH:
                 //Change speed depending on state
                 switch(currentState){
-                    case State.WANDER: speed = speedMax;
+                    case State.WANDER:
+                        agent.speed = speedMax;
                         break;
-                    case State.SEEK: speed = speedMax * 2f;
+                    case State.SEEK: 
+                        agent.speed = speedMax * 2f;
                         break;
-                    case State.SEARCH: speed = 0;
+                    case State.SEARCH:
+                        agent.speed = 0;
                         break;
                 }
 
                 //Update target to waypoint
                 UpdateCurrentWaypoint();
-                target = waypoints[currentWaypoint].position;
+                agent.destination = waypoints[currentWaypoint].position;
                 break;
 
             //Free movement cases
             case State.CHASE:
-                //TODO: Make better system to account for walls
-                //Currently, stops when gets to player position when triggered
-                //Should be fixed when nav map is implemented
-                target = player.transform.position;
-                speed = speedMax * 2f;
+                agent.speed = speedMax * 2f;
+                agent.destination = player.transform.position;
                 break;
 
             case State.ATTACK:
+                //TODO: when attacking is implemented, update speed and destination
+                FindNearestWaypoint();
                 break;
         }
-
-        //Move to target
-        var step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, target, step);
     }
 
-
+    /*
+     * Uses current position of the enemy to determine which waypoint
+     * to navigate to and update currentWaypoint accordingly
+     */
     private void UpdateCurrentWaypoint()
     {
         //Check if approximately at waypoint
-        if (Vector3.Distance(transform.position, target) < 0.5f)
+        if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < 1f)
         {
             //Go to next waypoint
-            currentWaypoint++; 
+            currentWaypoint++;
         }
 
         //Last waypoint on list, return to start
         if (currentWaypoint == waypoints.Count) { currentWaypoint = 0; }
+    }
+
+    /*
+     * Finds the waypoint closest to the enemy and update currentWaypoint
+     * accordingly.
+     */
+    private void FindNearestWaypoint()
+    {
+        int closest = 0;
+        float closestDist = Vector3.Distance(transform.position, waypoints[0].transform.position);
+        for (int i = 1; i < waypoints.Count; i++)
+        {
+            float newDist = Vector3.Distance(transform.position, (waypoints[i].transform.position));
+            if (newDist < closestDist)
+            {
+                closest = i;
+                closestDist = newDist;
+            }
+        }
+
+        currentWaypoint = closest;
     }
 }
