@@ -16,7 +16,8 @@ public class EnemyState : MonoBehaviour
 {
     static public float searchCooldownMax = 20f;      //Max value of search cooldown
     static public float searchTimerMax = 10f;         //Max value of search timer
-    
+    static public float preAttackTimerMax = 3f;       //Max value of attack timer
+
     public GameObject player;                          //Store player reference
     public State state;                                //Current enemy state
     public float attackRangeMax = 10f;                 //Attack range radius
@@ -25,12 +26,22 @@ public class EnemyState : MonoBehaviour
     public float searchTimer = searchTimerMax;         //Duration of search state
     public bool playerLightOn;                         //Status of the player light
 
+    //TODO: REMOVE WHEN ANIMATIONS IMPLEMENTED
+    public float preAttackTimer = preAttackTimerMax;   //Time until attack hits
+    public float attackTimer = preAttackTimerMax-2;      //Time attack lasts
+
     private float distToPlayer;                        //Store distance to player
     private Ray ray;                                   //Ray to player location
+
+    //TODO: REMOVE WHEN ANIMATIONS IMPLEMENTED
+    private Collider attackCol;                        //Store reference to attack collider
 
     void Start()
     {
         state = State.WANDER;
+        attackCol = GetComponent<BoxCollider>();
+        attackCol.enabled = false;
+        preAttackTimer = preAttackTimerMax;
     }
 
     //Check if any changes needed for enemy state
@@ -41,24 +52,43 @@ public class EnemyState : MonoBehaviour
         playerLightOn = light.intensity > 0.2f && light.isActiveAndEnabled;
         Vector3 playerPos = player.GetComponent<Transform>().position;
         distToPlayer = Vector3.Distance(transform.position, playerPos);
-        
-        RaycastHit hit;        
-        
+
+        //Cast ray to player
+        RaycastHit hit;
+        ray = new Ray(transform.position, (playerPos - transform.position));
+        bool rayBlocked = Physics.Raycast(ray, out hit, distToPlayer);
+
         //Attack state, overrules all other conditions
         if (state == State.ATTACK)
         {
-            //With no enemy animations or player death scenarios, 
-            //all this does is return to search mode
+            ////TODO: REFACTOR WHEN ANIMATIONS IMPLEMENTED
             Debug.DrawRay(transform.position, (playerPos - transform.position), Color.red);
-            state = State.SEARCH;
-            searchCooldown = 0;
-            searchTimer = 0;
+            preAttackTimer = (preAttackTimer <= 0) ? 0 : preAttackTimer - 1 * Time.deltaTime;
+            if (preAttackTimer <= 0)
+            {
+                //Enable collider
+                attackCol.enabled = true;
+                attackTimer = (attackTimer <= 0) ? 0 : attackTimer - 1 * Time.deltaTime;
+                if (attackTimer <= 0)
+                {
+                    Debug.Log("Attacked");
+                    preAttackTimer = preAttackTimerMax;
+                    attackTimer = preAttackTimerMax - 2;
+                    //Start searching
+                    attackCol.enabled = false;
+                    state = State.SEARCH;
+                    searchCooldown = 0;
+                    searchTimer = 0;
+                    
+                }
+                
+            }
         }
-
+        
         //Chase state, overrules all other conditions
         else if (state == State.CHASE)
         {
-            if (distToPlayer <= attackRangeMax) { state = State.ATTACK; }
+            if (distToPlayer <= attackRangeMax && !(rayBlocked && hit.collider.CompareTag("Wall"))) { state = State.ATTACK; }
             Debug.DrawRay(transform.position, (playerPos - transform.position), Color.yellow);
 
         }
@@ -67,8 +97,6 @@ public class EnemyState : MonoBehaviour
         else if (distToPlayer <= chaseRangeMax)
         {
             //Cast ray toward player and log possible hit
-            ray = new Ray(transform.position, (playerPos - transform.position));
-            bool rayBlocked = Physics.Raycast(ray, out hit, distToPlayer);
             Debug.DrawRay(transform.position, (playerPos - transform.position), Color.white);
 
             //Wall is between player and enemy
@@ -91,6 +119,9 @@ public class EnemyState : MonoBehaviour
                 state = State.SEARCH;
                 searchCooldown = searchCooldownMax;
                 if (searchTimer <= 0) { searchTimer = searchTimerMax; }
+
+                //REMOVE WHEN ATTACK IS ANIMATED
+                attackCol.enabled = false;
             }
 
             //Default to WANDER
@@ -106,8 +137,26 @@ public class EnemyState : MonoBehaviour
             Debug.DrawRay(transform.position, (playerPos - transform.position), Color.blue);
         }
 
-        //Reduce search cooldown
+        //Reduce all timers
         searchCooldown = (searchCooldown <= 0) ? 0 : searchCooldown - 1 * Time.deltaTime;
         searchTimer = (searchTimer <= 0) ? 0 : searchTimer - 1 * Time.deltaTime;
+    }
+
+    /*
+     * Detect when player is colliding with enemy/attack hitbox
+     */
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject == player)
+        {
+            Debug.Log("Player collision: True");
+            if (attackCol.enabled)
+            {
+                //TODO: indicate to player somehow that they have been hit and are dead
+                Debug.Log("Player has been hit.");
+            }
+
+        }
     }
 }

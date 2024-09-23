@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -64,7 +65,17 @@ public class EnemyMovement : MonoBehaviour
                 break;
 
             case State.ATTACK:
-                //TODO: when attacking is implemented, update speed and destination
+                //Stop moving, slowly turn to face player while winding up attack
+                agent.speed = 0;
+                if (!GetComponent<BoxCollider>().enabled)
+                {
+                    Vector3 relativePos = player.transform.position - transform.position;
+                    Quaternion LookAtRotation = Quaternion.LookRotation(relativePos);
+                    Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, LookAtRotationOnly_Y, 0.05f);
+
+                }
+                
                 FindNearestWaypoint();
                 break;
         }
