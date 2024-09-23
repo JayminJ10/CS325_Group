@@ -72,7 +72,7 @@ public class EnemyMovement : MonoBehaviour
                     Vector3 relativePos = player.transform.position - transform.position;
                     Quaternion LookAtRotation = Quaternion.LookRotation(relativePos);
                     Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, LookAtRotationOnly_Y, 0.05f);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, LookAtRotationOnly_Y, 1f * Time.deltaTime);
 
                 }
                 
