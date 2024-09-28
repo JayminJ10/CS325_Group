@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.12148453, g: 0.27400124, b: 0.6603774, a: 1}
-  m_SkyboxMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2994,7 +2994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 547695624}
   offset: {x: 0, y: 0, z: 0}
-  distance: 15
+  distance: 10
   mouseSensitivity: 2
   smoothTime: 0.1
 --- !u!54 &963194230
@@ -3831,7 +3831,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a8189f9fe0b452d42b715b8fad1a1b65, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5851,6 +5851,18 @@ PrefabInstance:
     - target: {fileID: 1147446844058164305, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Name
       value: Wanderman
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256796701731144533, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: staminaDrainRate
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: maxFlickerIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: minFlickerIntensity
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
