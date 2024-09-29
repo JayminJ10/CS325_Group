@@ -17,10 +17,6 @@ public class CandleMechanics : MonoBehaviour
     private bool isShiningBrighter = false;  // Whether the light is shining brighter
     private float increaseIntensity = 1f;    // Intensity multiplier for brightening
 
-    public float candleLightStaminaCost = 10f; // Stamina cost to light a candle
-    public float interactionRange = 1f;       // Range within which the player can interact with candles
-
-
     void Start()
     {
         // Store the initial light intensities
@@ -33,8 +29,6 @@ public class CandleMechanics : MonoBehaviour
         HandleLightControl();    // Check for player input to turn off/on the light or make it brighter
         UpdateLightIntensity();  // Update light intensity based on stamina and flicker
         HandleStamina();         // Handle stamina drain/regen based on light state
-        CheckForCandleInteraction();  // Check if player can light nearby candles
-
     }
 
     void HandleLightControl()
@@ -119,31 +113,6 @@ public class CandleMechanics : MonoBehaviour
             // Regenerate stamina when the light is off, even when the player is moving
             playerMovement.currentStamina += playerMovement.staminaRegenRate * Time.deltaTime;
             playerMovement.currentStamina = Mathf.Clamp(playerMovement.currentStamina, 0, playerMovement.maxStamina);
-        }
-    }
-    void CheckForCandleInteraction()
-    {
-        // Find all candles tagged as "Candle"
-        GameObject[] candles = GameObject.FindGameObjectsWithTag("Candle");
-
-        // Loop through all candles in the scene
-        foreach (GameObject candle in candles)
-        {
-            // Calculate the distance between the player and the candle
-            float distanceToCandle = Vector3.Distance(transform.position, candle.transform.position);
-
-            // Check if the player is close enough to light the candle
-            if (distanceToCandle <= interactionRange && Input.GetKeyDown(KeyCode.E))
-            {
-                Light candleLight = candle.GetComponentInChildren<Light>();
-                
-                if (candleLight != null && !candleLight.enabled && playerMovement.currentStamina >= candleLightStaminaCost)
-                {
-                    // Light the candle and consume stamina
-                    candleLight.enabled = true;
-                    playerMovement.currentStamina -= candleLightStaminaCost;
-                }
-            }
         }
     }
 }
