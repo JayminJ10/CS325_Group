@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
@@ -9,16 +8,15 @@ public class CandleManager : MonoBehaviour
     private int candlesLit = 0;  // Number of candles lit by the player
 
     public TextMeshProUGUI candlesLitText;  // Reference to the UI text to display progress
-    public TextMeshProUGUI wellDoneText;  // Reference to the "Well Done" UI text
-    public GameObject candleCounterUI;  // The UI that shows the number of candles lit
+    public GameObject candleCounterUI;      // The UI that shows the number of candles lit
+    public TitleCardManager titleCardManager;  // Reference to the TitleCardManager script
 
-    public float messageDisplayTime = 3f;  // Time to display the candle count and well done message
+    public float litTextDisplayTime = 3f;   // Time to display the "Candles Lit" text
 
     void Start()
     {
-        // Initialize the candle count UI and hide the "Well Done" message
+        // Initialize the candle count UI
         UpdateCandleUI();
-        wellDoneText.gameObject.SetActive(false);
         candleCounterUI.SetActive(false);
     }
 
@@ -31,7 +29,8 @@ public class CandleManager : MonoBehaviour
         // Check if all candles are lit
         if (candlesLit >= totalCandles)
         {
-            StartCoroutine(DisplayWellDoneMessage());
+            // Wait for a few seconds and then trigger the end card through the TitleCardManager
+            StartCoroutine(TriggerEndCard());
         }
     }
 
@@ -46,15 +45,20 @@ public class CandleManager : MonoBehaviour
     // Hide the candle count UI after a few seconds
     private IEnumerator HideCandleCounterAfterDelay()
     {
-        yield return new WaitForSeconds(messageDisplayTime);
+        yield return new WaitForSeconds(litTextDisplayTime);
         candleCounterUI.SetActive(false);
     }
 
-    // Display the "Well Done" message when all candles are lit
-    private IEnumerator DisplayWellDoneMessage()
+    // Coroutine to trigger the end card after all candles are lit
+    private IEnumerator TriggerEndCard()
     {
-        wellDoneText.gameObject.SetActive(true);  // Show the "Well Done" message
-        yield return new WaitForSeconds(messageDisplayTime);
-        wellDoneText.gameObject.SetActive(false);  // Hide the "Well Done" message
+        // Wait for the candle lit text to disappear
+        yield return new WaitForSeconds(litTextDisplayTime);
+
+        // Call the TitleCardManager to show the end card and transition to the next level
+        if (titleCardManager != null)
+        {
+            titleCardManager.ShowEndCard();  // Trigger the end card in the TitleCardManager
+        }
     }
 }

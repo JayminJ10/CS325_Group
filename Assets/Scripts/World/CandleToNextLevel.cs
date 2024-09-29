@@ -49,23 +49,7 @@ public class CandleToNextLevel : MonoBehaviour
                 candleManager.LightCandle();
             }
 
-            // Load the next level after a short delay
-            Invoke("LoadNextLevel", 2f);  // Optional delay before transitioning
         }
     }
 
-    // Method to load the next scene
-    void LoadNextLevel()
-    {
-        // Check if there are more scenes to load
-        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
-        {
-            // Load the next scene in the build index
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else
-        {
-            Debug.Log("No more levels to load. End of game.");
-        }
-    }
 }
