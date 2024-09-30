@@ -155,6 +155,7 @@ public class EnemyState : MonoBehaviour
             {
                 //TODO: indicate to player somehow that they have been hit and are dead
                 Debug.Log("Player has been hit.");
+                player.GetComponent<PlayerStats>().IsHit();
             }
 
         }

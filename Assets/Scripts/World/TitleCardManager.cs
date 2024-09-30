@@ -10,6 +10,10 @@ public class TitleCardManager : MonoBehaviour
     public GameObject titleCardCanvas;   // Reference to the Title Card Canvas (UI)
     public TextMeshProUGUI titleText;    // Reference to the TextMeshPro title text
 
+    //References for Death card
+    public GameObject deathCardCanvas;   //Reference to the Death Card Canvas (UI)
+    public TextMeshProUGUI deathText;    //Reference to the Death Card text
+
     // References for the End Card
     public GameObject endCardCanvas;     // Reference to the End Card Canvas (UI)
     public TextMeshProUGUI endText;      // Reference to the End Card text
@@ -30,7 +34,7 @@ public class TitleCardManager : MonoBehaviour
             playerHUD.SetActive(false);  // Disable the entire HUD during the title card
         }
 
-        // Set the title card and end card inactive at the start
+        // Set the title card and end card and death card inactive at the start
         if (titleCardCanvas != null)
         {
             titleCardCanvas.SetActive(true);  // Ensure title card is shown on start
@@ -38,6 +42,10 @@ public class TitleCardManager : MonoBehaviour
         if (endCardCanvas != null)
         {
             endCardCanvas.SetActive(false);  // Ensure the end card is hidden on start
+        }
+        if (deathCardCanvas != null)
+        {
+            deathCardCanvas.SetActive(false);
         }
 
         // Start the title card sequence when the scene starts
@@ -51,6 +59,16 @@ public class TitleCardManager : MonoBehaviour
         {
             endCardCanvas.SetActive(true);  // Activate the end card
             StartCoroutine(ShowEndCardSequence());
+        }
+    }
+
+    // Public method to show the death card, called when player is hit
+    public void ShowDeathCard()
+    {
+        if (deathCardCanvas != null)
+        {
+            deathCardCanvas.SetActive(true);  // Activate the end card
+            StartCoroutine(ShowDeathCardSequence());
         }
     }
 
@@ -75,6 +93,32 @@ public class TitleCardManager : MonoBehaviour
         {
             playerHUD.SetActive(true);  // Enable the HUD
         }
+
+        // Resume the game and audio
+        Time.timeScale = 1f;
+        AudioListener.pause = false;  // Resume all game audio
+    }
+
+    IEnumerator ShowDeathCardSequence()
+    {
+        // Freeze the game and audio during the title card
+        Time.timeScale = 0f;
+        AudioListener.pause = true; // Pause all game audio
+
+        // Fade in the death card
+        yield return StartCoroutine(FadeInText(deathText));
+
+        // Wait for the display time
+        yield return new WaitForSecondsRealtime(displayTime);
+
+        // Fade in the death card
+        yield return StartCoroutine(FadeOutText(deathText));
+
+        //Reload the current level
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        //Hide death card once the fade-out is complete
+        deathCardCanvas.SetActive(false);
 
         // Resume the game and audio
         Time.timeScale = 1f;

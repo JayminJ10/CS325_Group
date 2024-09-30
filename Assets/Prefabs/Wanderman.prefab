@@ -277,6 +277,9 @@ PrefabInstance:
       addedObject: {fileID: 8256796701731144533}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6643169433532071901}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6939170370145156111}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
       insertIndex: -1
@@ -368,6 +371,19 @@ MonoBehaviour:
   spawnPoint: {x: 0, y: 0, z: 0}
   fallThreshold: -10
   turnSmoothTime: 0.1
+--- !u!114 &6643169433532071901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147446844058164305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680889abc591aa040a13f9c06747ebf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleCardManager: {fileID: 0}
 --- !u!111 &6939170370145156111
 Animation:
   m_ObjectHideFlags: 0
@@ -404,5 +420,3 @@ MonoBehaviour:
   minFlickerIntensity: 0.8
   maxFlickerIntensity: 1.2
   flickerSpeed: 5
-  candleLightStaminaCost: 25
-  interactionRange: 1.5
