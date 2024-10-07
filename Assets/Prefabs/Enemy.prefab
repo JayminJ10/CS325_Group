@@ -339,13 +339,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   state: 0
-  attackRangeMax: 10
+  attackRangeMax: 8
   chaseRangeMax: 40
   searchCooldown: 20
-  searchTimer: 10
+  searchTimer: 5
   playerLightOn: 0
   preAttackTimer: 3
-  attackTimer: 3
+  attackTimer: 1
 --- !u!114 &83817990783000834
 MonoBehaviour:
   m_ObjectHideFlags: 0

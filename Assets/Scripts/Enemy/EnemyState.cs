@@ -15,12 +15,12 @@ public enum State //All possible states
 public class EnemyState : MonoBehaviour
 {
     static public float searchCooldownMax = 20f;      //Max value of search cooldown
-    static public float searchTimerMax = 10f;         //Max value of search timer
+    static public float searchTimerMax = 5f;          //Max value of search timer
     static public float preAttackTimerMax = 3f;       //Max value of attack timer
 
     public GameObject player;                          //Store player reference
     public State state;                                //Current enemy state
-    public float attackRangeMax = 10f;                 //Attack range radius
+    public float attackRangeMax = 8f;                  //Attack range radius
     public float chaseRangeMax = 40f;                  //Chase range radius
     public float searchCooldown = searchCooldownMax;   //Search cooldown
     public float searchTimer = searchTimerMax;         //Duration of search state
@@ -28,7 +28,7 @@ public class EnemyState : MonoBehaviour
 
     //TODO: REMOVE WHEN ANIMATIONS IMPLEMENTED
     public float preAttackTimer = preAttackTimerMax;   //Time until attack hits
-    public float attackTimer = preAttackTimerMax-2;      //Time attack lasts
+    public float attackTimer = preAttackTimerMax-2;    //Time attack lasts
 
     private float distToPlayer;                        //Store distance to player
     private Ray ray;                                   //Ray to player location

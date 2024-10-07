@@ -60,7 +60,7 @@ public class EnemyMovement : MonoBehaviour
                         agent.speed = speedMax;
                         break;
                     case State.SEEK: 
-                        agent.speed = speedMax * 2f;
+                        agent.speed = speedMax * 1.5f;
                         break;
                     case State.SEARCH:
                         agent.speed = 0;
@@ -79,7 +79,7 @@ public class EnemyMovement : MonoBehaviour
                 color = new Color(255, 120, 0, 0.8f);
                 attackVisualMat.color = color;
 
-                agent.speed = speedMax * 2f;
+                agent.speed = speedMax * 1.8f;
                 agent.destination = player.transform.position;
                 break;
 
@@ -96,7 +96,7 @@ public class EnemyMovement : MonoBehaviour
                     Vector3 relativePos = player.transform.position - transform.position;
                     Quaternion LookAtRotation = Quaternion.LookRotation(relativePos);
                     Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, LookAtRotationOnly_Y, 1f * Time.deltaTime);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, LookAtRotationOnly_Y, 1.75f * Time.deltaTime);
 
                 }
                 
