@@ -90,6 +90,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        //TODO: REMOVE IN FUTURE BUILDS
+        //Quit the game entirely
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0)
         {
             StartDash();
