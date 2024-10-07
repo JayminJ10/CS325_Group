@@ -8,6 +8,7 @@ TagManager:
   - Block
   - Wall
   - Candle
+  - Safe Zone
   layers:
   - Default
   - TransparentFX

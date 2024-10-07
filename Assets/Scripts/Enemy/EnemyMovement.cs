@@ -81,6 +81,7 @@ public class EnemyMovement : MonoBehaviour
 
                 agent.speed = speedMax * 1.8f;
                 agent.destination = player.transform.position;
+                FindNearestWaypoint();
                 break;
 
             case State.ATTACK:

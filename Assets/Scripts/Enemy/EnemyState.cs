@@ -33,6 +33,8 @@ public class EnemyState : MonoBehaviour
     private float distToPlayer;                        //Store distance to player
     private Ray ray;                                   //Ray to player location
 
+    private bool playerSafe;                           //Ref to player safe state
+
     //TODO: REMOVE WHEN ANIMATIONS IMPLEMENTED
     private Collider attackCol;                        //Store reference to attack collider
 
@@ -52,6 +54,7 @@ public class EnemyState : MonoBehaviour
         playerLightOn = light.intensity > 0.2f && light.isActiveAndEnabled;
         Vector3 playerPos = player.GetComponent<Transform>().position;
         distToPlayer = Vector3.Distance(transform.position, playerPos);
+        playerSafe = player.GetComponent<PlayerStats>().safe;
 
         //Cast ray to player
         RaycastHit hit;
@@ -84,6 +87,9 @@ public class EnemyState : MonoBehaviour
                 
             }
         }
+
+        //If player safe, ignore them, stop pursuit
+        else if (playerSafe) { state = State.WANDER; }
         
         //Chase state, overrules all other conditions
         else if (state == State.CHASE)
@@ -108,6 +114,9 @@ public class EnemyState : MonoBehaviour
             //IMPORTANT: Attack will trigger even if light is off,
             //so player can't just run up to enemy
             else if (distToPlayer <= attackRangeMax) { state = State.ATTACK; }
+
+            //If player safe, do not pursue
+            else if (playerSafe) { state = State.WANDER;  }
 
             //Chase state
             else if (playerLightOn) { state = State.CHASE; }
