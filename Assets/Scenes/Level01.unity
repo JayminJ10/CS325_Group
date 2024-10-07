@@ -2834,6 +2834,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5846926236404042291}
     - target: {fileID: 83817990783000834, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
+      propertyPath: chaseMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a7a5d635849b2946b2e04694b4e7870, type: 2}
+    - target: {fileID: 83817990783000834, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
+      propertyPath: attackMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 43c22caed414524439602e5863c02500, type: 2}
+    - target: {fileID: 83817990783000834, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
+      propertyPath: wanderMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e7949aeb7c715d46a7ed66a7ad1feb7, type: 2}
+    - target: {fileID: 83817990783000834, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
       propertyPath: waypoints.Array.size
       value: 8
       objectReference: {fileID: 0}
@@ -2927,7 +2939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5845024099787646964, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7726766849589268123, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
       propertyPath: player
