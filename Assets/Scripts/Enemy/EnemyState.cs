@@ -99,8 +99,8 @@ public class EnemyState : MonoBehaviour
 
         }
 
-        //Player is within chase range with any state
-        else if (distToPlayer <= chaseRangeMax)
+        //Player is within chase range and on ground level with any state
+        else if (distToPlayer <= chaseRangeMax && !(player.transform.position.y > transform.position.y))
         {
             //Cast ray toward player and log possible hit
             Debug.DrawRay(transform.position, (playerPos - transform.position), Color.white);

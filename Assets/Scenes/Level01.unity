@@ -6165,7 +6165,7 @@ MonoBehaviour:
   totalCandles: 8
   candlesLitText: {fileID: 1952695763}
   candleCounterUI: {fileID: 1009457650}
-  titleCardManager: {fileID: 0}
+  titleCardManager: {fileID: 483719645}
   litTextDisplayTime: 3
 --- !u!4 &1535013010
 Transform:

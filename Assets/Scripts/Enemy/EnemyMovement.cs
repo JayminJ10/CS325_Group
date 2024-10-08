@@ -32,7 +32,7 @@ public class EnemyMovement : MonoBehaviour
         currentState = GetComponent<EnemyState>().state;
         startPos = transform.position;
         //Ensure speed is relative to player speed
-        speedMax = player.GetComponent<PlayerMovement>().speed;
+        speedMax = player.GetComponent<PlayerMovement>().speed * 0.75f;
         agent = GetComponent<NavMeshAgent>();
     }
 
