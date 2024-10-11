@@ -3,20 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class CandleToNextLevel : MonoBehaviour
 {
-    public CandleManager candleManager;   // Reference to the CandleManager to track progress
-    public PlayerMovement playerMovement; // Reference to the PlayerMovement script for stamina handling
-    public Light candleLight;             // Reference to the Light component of the candle
-    public float staminaCost = 10f;       // Stamina cost to light the candle
-    public float interactionRange = 2f;   // Distance within which the player can interact with the candle
+    public CandleManager candleManager;        // Reference to the CandleManager to track progress
+    public PlayerMovement playerMovement;      // Reference to the PlayerMovement script for stamina handling
+    public Light candleLight;                  // Reference to the Light component of the candle
+    public ParticleSystem flameEffect;         // Reference to the Particle System for the flame effect
+    public float staminaCost = 10f;            // Stamina cost to light the candle
+    public float interactionRange = 2f;        // Distance within which the player can interact with the candle
 
-    private bool isCandleLit = false;     // Track if the candle is already lit
+    private bool isCandleLit = false;          // Track if the candle is already lit
 
     void Start()
     {
-        // Ensure the candle light is off at the start
+        // Ensure the candle light and flame effect are off at the start
         if (candleLight != null)
         {
             candleLight.enabled = false;
+        }
+
+        if (flameEffect != null)
+        {
+            flameEffect.Stop(); // Ensure the particle system is not playing at the start
         }
     }
 
@@ -37,7 +43,16 @@ public class CandleToNextLevel : MonoBehaviour
         if (playerMovement.currentStamina >= staminaCost)
         {
             // Light the candle
-            candleLight.enabled = true;
+            if (candleLight != null)
+            {
+                candleLight.enabled = true;
+            }
+
+            if (flameEffect != null)
+            {
+                flameEffect.Play(); // Start the flame particle effect
+            }
+
             isCandleLit = true;
 
             // Deduct stamina
@@ -48,8 +63,6 @@ public class CandleToNextLevel : MonoBehaviour
             {
                 candleManager.LightCandle();
             }
-
         }
     }
-
 }
