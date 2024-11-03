@@ -67,7 +67,7 @@ public class CandleMechanics : MonoBehaviour
         if (isLightOn && Input.GetMouseButton(0))
         {
             isShiningBrighter = true;
-            increaseIntensity = 1.5f; // Double the effect
+            increaseIntensity = 1.3f; // Adjusted multiplier for more controlled brightness increase
         }
         else
         {
@@ -80,25 +80,30 @@ public class CandleMechanics : MonoBehaviour
     {
         if (flameEffect != null && isLightOn)
         {
-            float staminaRatio = Mathf.Clamp(playerMovement.currentStamina / playerMovement.maxStamina, 0.1f, 1f);
+            float staminaRatio = Mathf.Clamp(playerMovement.currentStamina / playerMovement.maxStamina, 0.01f, 1f);
 
             // Set particle count based on stamina, fewer particles at lower stamina
-            flameEmission.rateOverTime = Mathf.Lerp(.5f, 80f, staminaRatio) * increaseIntensity;
+            flameEmission.rateOverTime = Mathf.Lerp(1f, 80f, staminaRatio) * increaseIntensity;
 
             // Adjust the flame’s speed, size, and brightness based on stamina
-            flameMainModule.startSpeed = Mathf.Lerp(0.2f, .4f, staminaRatio) * increaseIntensity;
+            flameMainModule.startSpeed = Mathf.Lerp(0.1f, 0.4f, staminaRatio) * increaseIntensity;
             flameMainModule.startSize = Mathf.Lerp(0.05f, 0.2f, staminaRatio) * increaseIntensity;
 
-            // Update the player light's intensity based on stamina
-            if (playerLight != null)
+            // Update the player light's intensity with separate ranges for regular and brighter states
+            float baseIntensity = Mathf.Lerp(0.4f * initialPlayerLightIntensity, initialPlayerLightIntensity, staminaRatio);
+            if (isShiningBrighter)
             {
-                playerLight.intensity = Mathf.Lerp(0.25f * initialPlayerLightIntensity, initialPlayerLightIntensity, staminaRatio) * increaseIntensity;
+                playerLight.intensity = Mathf.Lerp(playerLight.intensity, baseIntensity * increaseIntensity, Time.deltaTime * 5f);
+            }
+            else
+            {
+                playerLight.intensity = Mathf.Lerp(playerLight.intensity, baseIntensity, Time.deltaTime * 5f);
             }
 
-            // Adjust secondary light's intensity smoothly based on stamina
+            // Adjust secondary light's intensity based on stamina, dimming to almost zero
             if (secondaryLight != null)
             {
-                secondaryLight.intensity = Mathf.Lerp(0.25f * initialSecondaryLightIntensity, initialSecondaryLightIntensity, staminaRatio);
+                secondaryLight.intensity = Mathf.Lerp(0f, initialSecondaryLightIntensity, staminaRatio);
             }
         }
         else if (!isLightOn)
@@ -114,7 +119,7 @@ public class CandleMechanics : MonoBehaviour
         {
             if (isShiningBrighter)
             {
-                playerMovement.currentStamina -= playerMovement.staminaDrainRate * 3f * Time.deltaTime; // Faster drain when brighter
+                playerMovement.currentStamina -= playerMovement.staminaDrainRate * 2.5f * Time.deltaTime; // Slightly slower drain when brighter
             }
             else
             {

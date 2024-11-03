@@ -13011,7 +13011,7 @@ GameObject:
   - component: {fileID: 566875393}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Ground
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -24448,7 +24448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 547695624}
   offset: {x: 0, y: 0, z: 0}
-  distance: 10
+  distance: 7
   mouseSensitivity: 2
   smoothTime: 0.1
   collisionMask:
@@ -53126,7 +53126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 107
+      value: 109.307
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalPosition.y
@@ -53134,11 +53134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.9
+      value: 2.863
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9989261
+      value: 0.67358524
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalRotation.x
@@ -53146,7 +53146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.046332564
+      value: -0.7391096
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalRotation.z
@@ -53158,7 +53158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -5.311
+      value: -95.311
       objectReference: {fileID: 0}
     - target: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
