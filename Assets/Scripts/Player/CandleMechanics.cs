@@ -2,100 +2,116 @@ using UnityEngine;
 
 public class CandleMechanics : MonoBehaviour
 {
-    public PlayerMovement playerMovement;    // Reference to the PlayerMovement script to access stamina
-    public Light playerLight;                // The player's main candle light
-    public Light secondaryLight;             // The secondary light (for illuminating the area)
+    public PlayerMovement playerMovement;        // Reference to the PlayerMovement script to access stamina
+    public ParticleSystem flameEffect;           // The flame particle system, which includes player light
+    public Light playerLight;                    // The light within the flame particle system
+    public Light secondaryLight;                 // The secondary light for illuminating the player's face
 
-    public float minFlickerIntensity = 0.8f; // Minimum flicker intensity
-    public float maxFlickerIntensity = 1.2f; // Maximum flicker intensity
-    public float flickerSpeed = 5f;          // Speed of flicker effect
-
-    private float initialLightIntensity;     // The initial intensity of the main light
+    private float initialPlayerLightIntensity;    // The initial intensity of the player light
     private float initialSecondaryLightIntensity; // The initial intensity of the secondary light
 
-    private bool isLightOn = true;           // Whether the light is currently on
-    private bool isShiningBrighter = false;  // Whether the light is shining brighter
-    private float increaseIntensity = 1f;    // Intensity multiplier for brightening
+    private bool isLightOn = true;               // Whether the light is currently on
+    private bool isShiningBrighter = false;      // Whether the light is shining brighter
+    private float increaseIntensity = 1f;        // Intensity multiplier for brightening
+
+    private ParticleSystem.MainModule flameMainModule;     // Main module of the flame particle system
+    private ParticleSystem.EmissionModule flameEmission;   // Emission module to control particle count
 
     void Start()
     {
-        // Store the initial light intensities
-        initialLightIntensity = playerLight.intensity;
-        initialSecondaryLightIntensity = secondaryLight.intensity;
+        if (flameEffect != null)
+        {
+            flameMainModule = flameEffect.main;
+            flameEmission = flameEffect.emission;
+
+            if (playerLight != null)
+            {
+                initialPlayerLightIntensity = playerLight.intensity;
+            }
+            if (secondaryLight != null)
+            {
+                initialSecondaryLightIntensity = secondaryLight.intensity;
+            }
+        }
     }
 
     void Update()
     {
         HandleLightControl();    // Check for player input to turn off/on the light or make it brighter
-        UpdateLightIntensity();  // Update light intensity based on stamina and flicker
+        UpdateFlameProperties(); // Update flame properties based on stamina
         HandleStamina();         // Handle stamina drain/regen based on light state
     }
 
     void HandleLightControl()
     {
-        // Toggle lights off/on when 'F' is pressed
         if (Input.GetKeyDown(KeyCode.F))
         {
             isLightOn = !isLightOn; // Toggle the light on/off
 
-            // Toggle both lights
-            playerLight.enabled = isLightOn;
-            secondaryLight.enabled = isLightOn;
+            if (isLightOn)
+            {
+                flameEffect.Play();
+                if (playerLight != null) playerLight.enabled = true;
+                if (secondaryLight != null) secondaryLight.enabled = true;
+            }
+            else
+            {
+                flameEffect.Stop();
+                if (playerLight != null) playerLight.enabled = false;
+                if (secondaryLight != null) secondaryLight.enabled = false;
+            }
 
-            // Reset intensity multiplier when turning light off
             increaseIntensity = isLightOn ? 1f : 0f;
         }
 
-        // If holding down left-click, the light shines brighter
         if (isLightOn && Input.GetMouseButton(0))
         {
-            // Increase light intensity
             isShiningBrighter = true;
-            increaseIntensity = 2f; // 50% brighter
+            increaseIntensity = 1.5f; // Double the effect
         }
         else
         {
-            // Reset light intensity back to normal
             isShiningBrighter = false;
             increaseIntensity = 1f;
         }
     }
 
-    void UpdateLightIntensity()
+    void UpdateFlameProperties()
     {
-        // If the light is on and stamina is above 0
-        if (playerMovement.currentStamina > 0 && isLightOn)
+        if (flameEffect != null && isLightOn)
         {
-            // Turn on both lights when stamina isn't zero
-            playerLight.enabled = true;
-            secondaryLight.enabled = true;
-            // Apply a flicker effect based on Perlin noise
-            float flickerNoise = Mathf.PerlinNoise(Time.time * flickerSpeed, 0);
-            float flickerIntensity = Mathf.Lerp(minFlickerIntensity, maxFlickerIntensity, flickerNoise);
+            float staminaRatio = Mathf.Clamp(playerMovement.currentStamina / playerMovement.maxStamina, 0.1f, 1f);
 
-            // Calculate the base intensity using stamina and any brightness multipliers
-            float baseIntensity = (playerMovement.currentStamina / playerMovement.maxStamina) * initialLightIntensity * increaseIntensity;
+            // Set particle count based on stamina, fewer particles at lower stamina
+            flameEmission.rateOverTime = Mathf.Lerp(.5f, 80f, staminaRatio) * increaseIntensity;
 
-            // Apply the flicker effect on top of the base intensity
-            playerLight.intensity = baseIntensity * flickerIntensity;
+            // Adjust the flame’s speed, size, and brightness based on stamina
+            flameMainModule.startSpeed = Mathf.Lerp(0.2f, .4f, staminaRatio) * increaseIntensity;
+            flameMainModule.startSize = Mathf.Lerp(0.05f, 0.2f, staminaRatio) * increaseIntensity;
 
-            // Update the secondary light (without flicker)
-            secondaryLight.intensity = (playerMovement.currentStamina / playerMovement.maxStamina) * initialSecondaryLightIntensity * increaseIntensity;
+            // Update the player light's intensity based on stamina
+            if (playerLight != null)
+            {
+                playerLight.intensity = Mathf.Lerp(0.25f * initialPlayerLightIntensity, initialPlayerLightIntensity, staminaRatio) * increaseIntensity;
+            }
+
+            // Adjust secondary light's intensity smoothly based on stamina
+            if (secondaryLight != null)
+            {
+                secondaryLight.intensity = Mathf.Lerp(0.25f * initialSecondaryLightIntensity, initialSecondaryLightIntensity, staminaRatio);
+            }
         }
-        else if (playerMovement.currentStamina <= 0)
+        else if (!isLightOn)
         {
-            // Turn off both lights when stamina is depleted
-            playerLight.enabled = false;
-            secondaryLight.enabled = false;
+            if (playerLight != null) playerLight.enabled = false;
+            if (secondaryLight != null) secondaryLight.enabled = false;
         }
     }
 
     void HandleStamina()
     {
-        // If the lights are off, regenerate stamina, otherwise drain it
         if (isLightOn)
         {
-            // Drain stamina
             if (isShiningBrighter)
             {
                 playerMovement.currentStamina -= playerMovement.staminaDrainRate * 3f * Time.deltaTime; // Faster drain when brighter
@@ -105,12 +121,10 @@ public class CandleMechanics : MonoBehaviour
                 playerMovement.currentStamina -= playerMovement.staminaDrainRate * Time.deltaTime; // Normal drain
             }
 
-            // Prevent stamina from going below 0
             playerMovement.currentStamina = Mathf.Clamp(playerMovement.currentStamina, 0, playerMovement.maxStamina);
         }
         else
         {
-            // Regenerate stamina when the light is off, even when the player is moving
             playerMovement.currentStamina += playerMovement.staminaRegenRate * Time.deltaTime;
             playerMovement.currentStamina = Mathf.Clamp(playerMovement.currentStamina, 0, playerMovement.maxStamina);
         }

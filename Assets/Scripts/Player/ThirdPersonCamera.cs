@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    public Transform target;        // The target the camera follows (the player)
-    public Vector3 offset;          // Offset position from the target
-    public float distance = 5.0f;   // Distance from the target
+    public Transform target;             // The target the camera follows (the player)
+    public Vector3 offset;               // Offset position from the target
+    public float distance = 5.0f;        // Maximum distance from the target
     public float mouseSensitivity = 2.0f;   // Mouse sensitivity for rotation
-    public float smoothTime = 0.1f; // Smooth time for camera movement
+    public float smoothTime = 0.1f;      // Smooth time for camera movement
+    public LayerMask collisionMask;      // Layer mask for objects that can block the camera
 
-    private float rotationY = 0.0f; // Vertical rotation
-    private float rotationX = 0.0f; // Horizontal rotation
+    private float rotationY = 0.0f;      // Vertical rotation
+    private float rotationX = 0.0f;      // Horizontal rotation
 
-    private Vector3 currentVelocity; // Used for smooth damping
+    private Vector3 currentVelocity;     // Used for smooth damping
 
     void Start()
     {
@@ -44,6 +45,14 @@ public class ThirdPersonCamera : MonoBehaviour
 
             // Calculate the desired position
             Vector3 desiredPosition = target.position - (rotation * Vector3.forward * distance) + offset;
+
+            // Check for obstacles between the player and the camera
+            RaycastHit hit;
+            if (Physics.Linecast(target.position + offset, desiredPosition, out hit, collisionMask))
+            {
+                // Position the camera at the collision point, with a small offset to avoid clipping
+                desiredPosition = hit.point + hit.normal * 0.2f;
+            }
 
             // Smoothly move to the desired position
             transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref currentVelocity, smoothTime);
