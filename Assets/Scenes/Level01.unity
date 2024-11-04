@@ -12908,7 +12908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &483719645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13429,7 +13429,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5845024099787646964, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 889013301}
   m_SourcePrefab: {fileID: 100100000, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
 --- !u!1001 &601582383
 PrefabInstance:
@@ -24149,6 +24152,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843685477}
   m_CullTransparentMesh: 1
+--- !u!1 &889013289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5845024099787646964, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
+  m_PrefabInstance: {fileID: 595774606}
+  m_PrefabAsset: {fileID: 0}
+--- !u!164 &889013301
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889013289}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: -237
+  m_DecayTime: 2.7
+  m_DecayHFRatio: 0.79
+  m_ReflectionsLevel: -1214
+  m_ReverbLevel: 395
+  m_ReverbDelay: 0.02
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 14
 --- !u!1001 &938415234
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24367,7 +24398,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -53308,13 +53339,24 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1720724858}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1147446844058164305, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5846926236404042297}
   m_SourcePrefab: {fileID: 100100000, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
 --- !u!1 &5846926236404042291 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1147446844058164305, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
   m_PrefabInstance: {fileID: 5846926236404042290}
   m_PrefabAsset: {fileID: 0}
+--- !u!81 &5846926236404042297
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846926236404042291}
+  m_Enabled: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
