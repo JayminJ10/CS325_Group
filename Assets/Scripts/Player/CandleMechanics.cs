@@ -134,4 +134,20 @@ public class CandleMechanics : MonoBehaviour
             playerMovement.currentStamina = Mathf.Clamp(playerMovement.currentStamina, 0, playerMovement.maxStamina);
         }
     }
+    public void IncreaseStamina(float amount)
+    {
+    // Increase stamina, but don't exceed the maximum stamina
+    playerMovement.maxStamina = playerMovement.maxStamina + amount;
+    
+    // Update the light intensity immediately to reflect the stamina boost
+    UpdateFlameProperties();
+    }
+
+    public void IncreaseRegen(float amount)
+    {
+    // Increase stamina, but don't exceed the maximum stamina
+    playerMovement.staminaRegenRate = playerMovement.staminaRegenRate + amount;
+    
+    }
+
 }
