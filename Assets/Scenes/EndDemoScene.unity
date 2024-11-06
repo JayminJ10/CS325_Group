@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Thank you for playing our Alpha!
+  m_text: 'Thank you for playing our Beta!
 
 
     Press ''Esc'' to close the game.'
