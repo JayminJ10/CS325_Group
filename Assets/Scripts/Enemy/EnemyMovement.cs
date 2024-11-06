@@ -57,10 +57,11 @@ public class EnemyMovement : MonoBehaviour
                 //Change speed depending on state
                 switch(currentState){
                     case State.WANDER:
-                        agent.speed = speedMax;
+                        agent.speed = speedMax * 0.75f;
                         break;
-                    case State.SEEK: 
-                        agent.speed = speedMax * 1.5f;
+                    case State.SEEK:
+                        //agent.speed = speedMax * 1.5f;
+                        agent.speed = speedMax * 0.75f;
                         break;
                     case State.SEARCH:
                         agent.speed = 0;
