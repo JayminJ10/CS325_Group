@@ -21,7 +21,7 @@ public class EnemyState : MonoBehaviour
     public GameObject player;                          //Store player reference
     public State state;                                //Current enemy state
     public float attackRangeMax = 8f;                  //Attack range radius
-    public float chaseRangeMax = 40f;                  //Chase range radius
+    public float chaseRangeMax = 30f;                  //Chase range radius
     public float searchCooldown = searchCooldownMax;   //Search cooldown
     public float searchTimer = searchTimerMax;         //Duration of search state
     public bool playerLightOn;                         //Status of the player light
@@ -105,10 +105,10 @@ public class EnemyState : MonoBehaviour
             //Cast ray toward player and log possible hit
             Debug.DrawRay(transform.position, (playerPos - transform.position), Color.white);
 
-            //Wall is between player and enemy
+            //Object is between player and enemy
             //Currently does nothing, I just need it to override other conditions
             //and can't be bothered to rewrite
-            if (rayBlocked && hit.collider.CompareTag("Wall")) { } 
+            if (rayBlocked && !hit.collider.CompareTag("Player")) { } 
 
             //Attack state
             //IMPORTANT: Attack will trigger even if light is off,
