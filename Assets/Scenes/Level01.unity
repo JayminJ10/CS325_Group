@@ -456,7 +456,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 4
@@ -464,7 +464,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -546,7 +546,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 1
@@ -554,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1241,7 +1241,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 7
@@ -1249,7 +1249,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -12049,7 +12049,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 2
@@ -12057,7 +12057,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -12139,7 +12139,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 6
@@ -12147,7 +12147,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -12670,7 +12670,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: NaN, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.0000068, y: 6.1419, z: 0.78415, w: 3}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -12952,7 +12952,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 5
@@ -12960,7 +12960,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -40809,7 +40809,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 8
@@ -40817,7 +40817,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -41702,7 +41702,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -2813467912831258332, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 4934664721000289348, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Name
       value: Candle 3
@@ -41710,7 +41710,7 @@ PrefabInstance:
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: 1775930247922574576, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -54227,24 +54227,32 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Color.b
-      value: 0.09825563
+      value: 0.6897472
       objectReference: {fileID: 0}
     - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Color.g
-      value: 0.64984107
+      value: 0.8439616
       objectReference: {fileID: 0}
     - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Color.r
-      value: 0.9056604
+      value: 0.9433962
       objectReference: {fileID: 0}
     - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Intensity
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_CookieSize
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: m_RenderMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5788691435743915393, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_BounceIntensity
@@ -54293,7 +54301,7 @@ PrefabInstance:
     - target: {fileID: 6939170370145156111, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Animations.Array.data[0]
       value: 
-      objectReference: {fileID: -4274770991410265338, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      objectReference: {fileID: -6544428077046268240, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
     - target: {fileID: 6939170370145156111, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Animations.Array.data[1]
       value: 

@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
+    private bool hasJumped = false;
 
     // Dashing
     public float dashSpeed = 20f;
@@ -64,15 +65,15 @@ public class PlayerMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
-            // Play Walk animation only if grounded and not dashing
-            if (isGrounded && !anim.IsPlaying("Walk") && !anim.IsPlaying("Dash"))
+            // Only play Walk animation if grounded, not dashing, and not jumping
+            if (isGrounded && !anim.IsPlaying("Walk") && !hasJumped)
             {
                 anim.CrossFade("Walk");
             }
         }
 
-        // Handle idle animation if grounded and no input
-        if (isGrounded && direction.magnitude < 0.1f && !isDashing && !anim.IsPlaying("Idle"))
+        // Handle idle animation if grounded, no input, not dashing, and not jumping
+        if (isGrounded && direction.magnitude < 0.1f && !isDashing && !hasJumped && !anim.IsPlaying("Idle"))
         {
             anim.CrossFade("Idle");
         }
@@ -101,22 +102,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Handle jump start
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space) && !hasJumped)
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
             anim.CrossFade("Jump");
+            hasJumped = true; // Set hasJumped to true so the Jump animation plays only once
         }
 
         // Apply gravity while in the air
         if (!isGrounded)
         {
             velocity.y += gravity * Time.deltaTime * mass;
-
-            // Continue jump animation if not dashing
-            if (!isDashing && !anim.IsPlaying("Jump"))
-            {
-                anim.CrossFade("Jump");
-            }
         }
 
         // Apply the velocity to the CharacterController
@@ -126,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+            hasJumped = false; // Reset jump state when landed
 
             // If landed, go back to Walk or Idle animation based on movement input if not dashing
             if (!isDashing)
@@ -177,12 +174,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void EndDash()
     {
-        // Dash continues until player lands
+        isDashing = false;
+
+        // After dash ends, go back to Walk or Idle based on movement
         if (isGrounded)
         {
-            isDashing = false;
-
-            // Return to idle or walk animation based on movement if grounded
             if (controller.velocity.magnitude > 0.1f)
             {
                 anim.CrossFade("Walk");
