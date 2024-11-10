@@ -18,29 +18,27 @@ public class PlayerMovement : MonoBehaviour
     private float dashCooldownTimer;
     private bool isDashing = false;
 
-    public float maxStamina = 100f;          // Maximum stamina
-    public float currentStamina;             // Current stamina level
-    public float staminaDrainRate = 4f;      // Stamina drained per second
-    public float staminaRegenRate = 12f;     // Stamina regenerated per second
-    public bool isStaminaDepleting = true;   // Flag to control stamina depletion
-    public Vector3 spawnPoint;   // Define the spawn point
-    public float fallThreshold = -10f;  // Threshold to detect when the player falls
+    public float maxStamina = 100f;
+    public float currentStamina;
+    public float staminaDrainRate = 4f;
+    public float staminaRegenRate = 12f;
+    public bool isStaminaDepleting = true;
+    public Vector3 spawnPoint;
+    public float fallThreshold = -10f;
 
     private Transform cameraTransform;
     private float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
 
-    private Animation anim;  // Reference to the Animation component for legacy animations
+    private Animation anim;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        currentStamina = maxStamina; // Start with full stamina
+        currentStamina = maxStamina;
 
-        // Get the main camera's transform
         cameraTransform = Camera.main.transform;
 
-        // Get the Animation component for legacy animations
         anim = GetComponent<Animation>();
 
         anim.Play("Idle");
@@ -48,56 +46,39 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Ground check
         isGrounded = controller.isGrounded;
 
-        // Get input axes
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
 
-        // Calculate the direction relative to the camera
         Vector3 direction = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
 
-        if (direction.magnitude >= 0.1f)
+        // Handle movement
+        if (direction.magnitude >= 0.1f && !isDashing)
         {
-            // Calculate the target angle and smooth the rotation
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
-            // Rotate the player
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            // Move the player
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
-            float currentSpeed = isDashing ? dashSpeed : speed;
-            controller.Move(moveDir.normalized * currentSpeed * Time.deltaTime);
-
-            if (!anim.IsPlaying("Walk"))
+            // Play Walk animation only if grounded and not dashing
+            if (isGrounded && !anim.IsPlaying("Walk") && !anim.IsPlaying("Dash"))
             {
                 anim.CrossFade("Walk");
             }
-
-            isStaminaDepleting = true;
         }
-        else
+
+        // Handle idle animation if grounded and no input
+        if (isGrounded && direction.magnitude < 0.1f && !isDashing && !anim.IsPlaying("Idle"))
         {
-            isStaminaDepleting = false;
-
-            if (!anim.IsPlaying("Idle"))
-            {
-                anim.CrossFade("Idle");
-            }
+            anim.CrossFade("Idle");
         }
 
-        //TODO: REMOVE IN FUTURE BUILDS
-        //Quit the game entirely
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0)
+        // Start dash if meets cooldown and stamina requirements
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && currentStamina > 0 && direction.magnitude >= 0.1f)
         {
             StartDash();
         }
@@ -108,9 +89,10 @@ public class PlayerMovement : MonoBehaviour
             dashCooldownTimer -= Time.deltaTime;
         }
 
-        // Handle dash duration
+        // Handle dashing
         if (isDashing)
         {
+            controller.Move(transform.forward * dashSpeed * Time.deltaTime); // Move forward during dash
             dashTimer -= Time.deltaTime;
             if (dashTimer <= 0)
             {
@@ -118,26 +100,45 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Jumping
+        // Handle jump start
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
             anim.CrossFade("Jump");
         }
 
-        // Apply gravity only when not grounded
+        // Apply gravity while in the air
         if (!isGrounded)
         {
             velocity.y += gravity * Time.deltaTime * mass;
+
+            // Continue jump animation if not dashing
+            if (!isDashing && !anim.IsPlaying("Jump"))
+            {
+                anim.CrossFade("Jump");
+            }
         }
 
         // Apply the velocity to the CharacterController
         controller.Move(velocity * Time.deltaTime);
 
-        // Reset vertical velocity when grounded
+        // Reset vertical velocity and handle landing
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;  // Small value to ensure the player stays grounded
+            velocity.y = -2f;
+
+            // If landed, go back to Walk or Idle animation based on movement input if not dashing
+            if (!isDashing)
+            {
+                if (direction.magnitude >= 0.1f)
+                {
+                    anim.CrossFade("Walk");
+                }
+                else
+                {
+                    anim.CrossFade("Idle");
+                }
+            }
         }
 
         // Stamina handling
@@ -156,10 +157,10 @@ public class PlayerMovement : MonoBehaviour
             currentStamina += staminaRegenRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
-         // Check if the player has fallen below the threshold
+
         if (transform.position.y < fallThreshold)
         {
-            RespawnPlayer();  // Send player back to the spawn point
+            RespawnPlayer();
         }
     }
 
@@ -169,30 +170,44 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
+
+        // Play the dash animation
+        anim.CrossFade("Dash");
     }
 
     private void EndDash()
     {
-        isDashing = false;
+        // Dash continues until player lands
+        if (isGrounded)
+        {
+            isDashing = false;
+
+            // Return to idle or walk animation based on movement if grounded
+            if (controller.velocity.magnitude > 0.1f)
+            {
+                anim.CrossFade("Walk");
+            }
+            else
+            {
+                anim.CrossFade("Idle");
+            }
+        }
     }
 
     void HandleStaminaDepletion()
     {
         // Optional logic when stamina depletes
     }
-     // Method to reset the player to the spawn point
+
     void RespawnPlayer()
     {
-        // Reset player's position to the spawn point
         transform.position = spawnPoint;
-
-        // Optionally reset vertical velocity
         velocity.y = 0f;
     }
+
     public void SetSpawnPoint(Vector3 newSpawnPoint)
     {
-    spawnPoint = newSpawnPoint;
-    Debug.Log("New spawn point set at: " + spawnPoint);
+        spawnPoint = newSpawnPoint;
+        Debug.Log("New spawn point set at: " + spawnPoint);
     }
-
 }
