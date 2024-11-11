@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CandleInteraction : MonoBehaviour
 {
-    public PlayerMovement playerMovement;  // Reference to the PlayerMovement script to set the spawn point
-    public Light candleLight;              // Reference to the candle's Light component
+    public PlayerStats playerStats;            // Reference to PlayerStats for stamina management
+    public Light candleLight;                  // Reference to the candle's Light component
     public float candleLightStaminaCost = 10f; // Stamina cost to light the candle
-    private bool isCandleLit = false;      // Track if the candle is already lit
+    private bool isCandleLit = false;          // Track if the candle is already lit
 
     void Start()
     {
@@ -28,17 +28,20 @@ public class CandleInteraction : MonoBehaviour
     // Method to light the candle and set it as the new spawn point
     void LightCandle()
     {
-        if (candleLight != null && playerMovement.currentStamina >= candleLightStaminaCost)
+        // Check if player has enough stamina to light the candle
+        if (playerStats.currentStamina >= candleLightStaminaCost)
         {
-            // Light the candle
-            candleLight.enabled = true;
+            if (candleLight != null)
+            {
+                candleLight.enabled = true;
+            }
             isCandleLit = true;
 
-            // Consume stamina
-            playerMovement.currentStamina -= candleLightStaminaCost;
+            // Consume stamina via PlayerStats
+            playerStats.ReduceStamina(candleLightStaminaCost);
 
-            // Set this candle's position as the new spawn point
-            playerMovement.SetSpawnPoint(transform.position);
+            // Change the tag to "LitCandle" to allow PlayerStats to detect it
+            gameObject.tag = "LitCandle";
 
             Debug.Log("Candle lit, spawn point set to candle position: " + transform.position);
         }

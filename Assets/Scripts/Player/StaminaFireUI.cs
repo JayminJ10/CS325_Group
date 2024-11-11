@@ -3,25 +3,25 @@ using UnityEngine.UI;
 
 public class StaminaFireUI : MonoBehaviour
 {
-    public PlayerMovement playerMovement; // Reference to the player's movement script
+    public PlayerStats playerStats;       // Reference to PlayerStats for stamina information
     private Image fireImage;              // Reference to the Image component
 
     void Start()
     {
         fireImage = GetComponent<Image>();
 
-        if (playerMovement == null)
+        if (playerStats == null)
         {
-            Debug.LogError("PlayerMovement reference is not set in StaminaFireUI script.");
+            Debug.LogError("PlayerStats reference is not set in StaminaFireUI script.");
         }
     }
 
     void Update()
     {
-        if (playerMovement != null)
+        if (playerStats != null)
         {
             // Calculate the fill amount based on stamina
-            float fillAmount = playerMovement.currentStamina / playerMovement.maxStamina;
+            float fillAmount = playerStats.currentStamina / playerStats.maxStamina;
             fireImage.fillAmount = fillAmount;
         }
     }

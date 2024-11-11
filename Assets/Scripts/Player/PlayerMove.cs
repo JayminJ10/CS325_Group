@@ -19,11 +19,8 @@ public class PlayerMovement : MonoBehaviour
     private float dashCooldownTimer;
     private bool isDashing = false;
 
-    public float maxStamina = 100f;
-    public float currentStamina;
-    public float staminaDrainRate = 4f;
-    public float staminaRegenRate = 12f;
-    public bool isStaminaDepleting = true;
+    public PlayerStats playerStats;  // Reference to PlayerStats for stamina management
+    public float staminaDrainRate = 4f;  // Adjusted stamina drain for dashing
     public Vector3 spawnPoint;
     public float fallThreshold = -10f;
 
@@ -36,13 +33,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        currentStamina = maxStamina;
-
         cameraTransform = Camera.main.transform;
-
         anim = GetComponent<Animation>();
-
         anim.Play("Idle");
+        spawnPoint = transform.position; // Set initial spawn point
     }
 
     void Update()
@@ -51,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
-
         Vector3 direction = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
 
         // Handle movement
@@ -61,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
@@ -79,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Start dash if meets cooldown and stamina requirements
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && currentStamina > 0 && direction.magnitude >= 0.1f)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && playerStats.currentStamina > 0 && direction.magnitude >= 0.1f)
         {
             StartDash();
         }
@@ -138,23 +130,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Stamina handling
-        if (isStaminaDepleting && currentStamina > 0)
-        {
-            currentStamina -= staminaDrainRate * Time.deltaTime;
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-
-            if (currentStamina == 0)
-            {
-                HandleStaminaDepletion();
-            }
-        }
-        else if (!isStaminaDepleting && currentStamina < maxStamina)
-        {
-            currentStamina += staminaRegenRate * Time.deltaTime;
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        }
-
+        // Check if the player has fallen below the threshold, triggering a respawn
         if (transform.position.y < fallThreshold)
         {
             RespawnPlayer();
@@ -163,12 +139,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartDash()
     {
-        currentStamina -= staminaDrainRate * 2;
+        playerStats.ReduceStamina(staminaDrainRate * 2); // Deduct stamina for dash
         isDashing = true;
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
-
-        // Play the dash animation
         anim.CrossFade("Dash");
     }
 
@@ -190,15 +164,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void HandleStaminaDepletion()
-    {
-        // Optional logic when stamina depletes
-    }
-
-    void RespawnPlayer()
+    private void RespawnPlayer()
     {
         transform.position = spawnPoint;
         velocity.y = 0f;
+        playerStats.currentStamina = playerStats.maxStamina; // Reset stamina on respawn
     }
 
     public void SetSpawnPoint(Vector3 newSpawnPoint)

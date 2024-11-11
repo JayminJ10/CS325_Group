@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 65381151}
+  playerStats: {fileID: 65381156}
   flameEffect: {fileID: 407368783}
   playerLight: {fileID: 1585395453}
   secondaryLight: {fileID: 694339590}
@@ -417,11 +418,8 @@ MonoBehaviour:
   dashSpeed: 15
   dashDuration: 0.25
   dashCooldown: 1
-  maxStamina: 100
-  currentStamina: 100
+  playerStats: {fileID: 65381156}
   staminaDrainRate: 4
-  staminaRegenRate: 12
-  isStaminaDepleting: 0
   spawnPoint: {x: 0, y: 1, z: 0}
   fallThreshold: -10
   turnSmoothTime: 0.1
@@ -502,6 +500,24 @@ CapsuleCollider:
   m_Height: 7.5
   m_Direction: 1
   m_Center: {x: 0, y: 3.5, z: 0}
+--- !u!114 &65381156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65381148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680889abc591aa040a13f9c06747ebf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleCardManager: {fileID: 833380109}
+  safe: 0
+  maxStamina: 100
+  currentStamina: 100
+  staminaRegenRate: 15
+  isNearLitCandle: 0
 --- !u!1 &71254073
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 65381154}
   offset: {x: 0, y: 0, z: 0}
-  distance: 5
+  distance: 7
   mouseSensitivity: 2
   smoothTime: 0.1
   collisionMask:
@@ -1030,7 +1046,7 @@ Transform:
   m_GameObject: {fileID: 314141389}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.063, y: 0.643, z: -1.708}
+  m_LocalPosition: {x: 0.063, y: 0.7, z: -0.894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1066,7 +1082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.119
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1237,6 +1253,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 65381155}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 65381156}
   m_SourcePrefab: {fileID: 100100000, guid: 29bee84f354d80144aaeaebe79b0723e, type: 3}
 --- !u!1 &407368780
 GameObject:
@@ -11854,7 +11873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65b22a70efc64d4b884ea2a82165db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 65381151}
+  playerStats: {fileID: 65381156}
 --- !u!114 &1087722537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12045,7 +12064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1877038508}
-  playerMovement: {fileID: 65381151}
+  playerStats: {fileID: 65381156}
   candleLight: {fileID: 114866187}
   flameEffect: {fileID: 818108815}
   staminaCost: 25
@@ -12078,6 +12097,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
   m_PrefabInstance: {fileID: 1776781682}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &1230165411
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230165405}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
 --- !u!1 &1445257061
 GameObject:
   m_ObjectHideFlags: 0
@@ -12667,6 +12709,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1230165406}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1230165411}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1001 &1800812636
 PrefabInstance:

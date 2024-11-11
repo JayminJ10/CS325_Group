@@ -478,6 +478,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 580321248}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 580321252}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1001 &79785053
 PrefabInstance:
@@ -551,6 +554,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7071182760956848314, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -568,6 +575,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 187495465}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 187495469}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1 &83615619
 GameObject:
@@ -1263,6 +1273,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 344308468}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 344308472}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1 &158238487
 GameObject:
@@ -6357,7 +6370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 397732872}
   flameEffect: {fileID: 755064045}
   staminaCost: 25
@@ -6382,6 +6395,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.016
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &187495469
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187495463}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
   m_Height: 0.028
   m_Direction: 2
   m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
@@ -11954,7 +11990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 1755525593}
   flameEffect: {fileID: 1552923134}
   staminaCost: 25
@@ -11979,6 +12015,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.016
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &298529265
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298529259}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
   m_Height: 0.028
   m_Direction: 2
   m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
@@ -12071,6 +12130,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1960692888}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1960692892}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1001 &305916353
 PrefabInstance:
@@ -12161,6 +12223,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 298529261}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 298529265}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1 &344308466 stripped
 GameObject:
@@ -12185,7 +12250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 2009166712}
   flameEffect: {fileID: 967943480}
   staminaCost: 25
@@ -12210,6 +12275,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.016
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &344308472
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344308466}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
   m_Height: 0.028
   m_Direction: 2
   m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
@@ -12548,7 +12636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 1108614081}
   flameEffect: {fileID: 776736352}
   staminaCost: 25
@@ -12573,6 +12661,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.016
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &367676317
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367676311}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
   m_Height: 0.028
   m_Direction: 2
   m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
@@ -12974,6 +13085,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 588363530}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 588363534}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1 &449171029
 GameObject:
@@ -13170,17 +13284,6 @@ Transform:
   - {fileID: 1958168013}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &547695621 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8256796701731144533, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
-  m_PrefabInstance: {fileID: 5846926236404042290}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5846926236404042291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dec0df32f7c7b004abdf5ff3b4632809, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &547695624 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 335338401417561835, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
@@ -13345,7 +13448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 2145840915}
   flameEffect: {fileID: 196398326}
   staminaCost: 25
@@ -13370,6 +13473,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.016
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &580321252
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580321246}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
   m_Height: 0.028
   m_Direction: 2
   m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
@@ -13501,7 +13627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 1612158862}
   flameEffect: {fileID: 1098295831}
   staminaCost: 25
@@ -13526,6 +13652,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.016
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &588363534
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588363528}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
   m_Height: 0.028
   m_Direction: 2
   m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
@@ -40831,6 +40980,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 367676313}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 367676317}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1 &1319639462
 GameObject:
@@ -41105,7 +41257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 1782579964}
   flameEffect: {fileID: 1195280408}
   staminaCost: 25
@@ -41130,6 +41282,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.016
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &1406587779
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406587773}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
   m_Height: 0.028
   m_Direction: 2
   m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
@@ -41724,6 +41899,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1406587775}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1406587779}
   m_SourcePrefab: {fileID: 100100000, guid: 464d00061d2d1ca478bdb8f899b884a3, type: 3}
 --- !u!1 &1552923131
 GameObject:
@@ -52553,7 +52731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65b22a70efc64d4b884ea2a82165db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
 --- !u!1 &1939841262
 GameObject:
   m_ObjectHideFlags: 0
@@ -53156,7 +53334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candleManager: {fileID: 1535013009}
-  playerMovement: {fileID: 547695621}
+  playerStats: {fileID: 5846926236404042298}
   candleLight: {fileID: 971725873}
   flameEffect: {fileID: 178652458}
   staminaCost: 25
@@ -53176,14 +53354,37 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 0.028
+  m_Direction: 2
+  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+--- !u!136 &1960692892
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960692886}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.016
-  m_Height: 0.028
+  m_Radius: 0.015
+  m_Height: 0.025
   m_Direction: 2
-  m_Center: {x: 9.313226e-10, y: -0.0000070128576, z: -0.0000000013969836}
+  m_Center: {x: 9.313226e-10, y: -0.000006953253, z: 0.000000020489097}
 --- !u!1 &1968162440
 GameObject:
   m_ObjectHideFlags: 0
@@ -54339,6 +54540,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8256796701731144533, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 5846926236404042298}
+    - target: {fileID: 8256796701731144533, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: dashDuration
       value: 0.15
       objectReference: {fileID: 0}
@@ -54358,6 +54563,10 @@ PrefabInstance:
       propertyPath: playerLight
       value: 
       objectReference: {fileID: 1506748091}
+    - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 5846926236404042298}
     - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: maxFlickerIntensity
       value: 1.4
@@ -54412,6 +54621,17 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5846926236404042291}
   m_Enabled: 1
+--- !u!114 &5846926236404042298 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6643169433532071901, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+  m_PrefabInstance: {fileID: 5846926236404042290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846926236404042291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680889abc591aa040a13f9c06747ebf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Candle
   - Safe Zone
+  - LitCandle
   layers:
   - Default
   - TransparentFX

@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class CandleMechanics : MonoBehaviour
 {
-    public PlayerMovement playerMovement;        // Reference to the PlayerMovement script to access stamina
-    public ParticleSystem flameEffect;           // The flame particle system, which includes player light
-    public Light playerLight;                    // The light within the flame particle system
-    public Light secondaryLight;                 // The secondary light for illuminating the player's face
+    public PlayerMovement playerMovement;        // Reference to PlayerMovement to access stamina controls
+    public PlayerStats playerStats;              // Reference to PlayerStats for stamina management
+    public ParticleSystem flameEffect;           // Flame particle system
+    public Light playerLight;                    // Light in the flame particle system
+    public Light secondaryLight;                 // Secondary light for player's face
 
-    private float initialPlayerLightIntensity;    // The initial intensity of the player light
-    private float initialSecondaryLightIntensity; // The initial intensity of the secondary light
+    private float initialPlayerLightIntensity;    // Initial player light intensity
+    private float initialSecondaryLightIntensity; // Initial secondary light intensity
 
     private bool isLightOn = true;               // Whether the light is currently on
     private bool isShiningBrighter = false;      // Whether the light is shining brighter
@@ -37,9 +38,9 @@ public class CandleMechanics : MonoBehaviour
 
     void Update()
     {
-        HandleLightControl();    // Check for player input to turn off/on the light or make it brighter
-        UpdateFlameProperties(); // Update flame properties based on stamina
-        HandleStamina();         // Handle stamina drain/regen based on light state
+        HandleLightControl();    // Check for player input to toggle light or make it brighter
+        UpdateFlameProperties(); // Update flame properties based on stamina level
+        HandleStamina();         // Manage stamina drain/regen based on light state
     }
 
     void HandleLightControl()
@@ -67,7 +68,7 @@ public class CandleMechanics : MonoBehaviour
         if (isLightOn && Input.GetMouseButton(0))
         {
             isShiningBrighter = true;
-            increaseIntensity = 1.3f; // Adjusted multiplier for more controlled brightness increase
+            increaseIntensity = 1.3f; // Adjusted multiplier for controlled brightness increase
         }
         else
         {
@@ -80,27 +81,18 @@ public class CandleMechanics : MonoBehaviour
     {
         if (flameEffect != null && isLightOn)
         {
-            float staminaRatio = Mathf.Clamp(playerMovement.currentStamina / playerMovement.maxStamina, 0.01f, 1f);
+            float staminaRatio = Mathf.Clamp(playerStats.currentStamina / playerStats.maxStamina, 0.01f, 1f);
 
-            // Set particle count based on stamina, fewer particles at lower stamina
+            // Adjust particle count, speed, and size based on stamina
             flameEmission.rateOverTime = Mathf.Lerp(1f, 80f, staminaRatio) * increaseIntensity;
-
-            // Adjust the flame’s speed, size, and brightness based on stamina
             flameMainModule.startSpeed = Mathf.Lerp(0.1f, 0.4f, staminaRatio) * increaseIntensity;
             flameMainModule.startSize = Mathf.Lerp(0.05f, 0.2f, staminaRatio) * increaseIntensity;
 
-            // Update the player light's intensity with separate ranges for regular and brighter states
+            // Update player light intensity with different ranges for regular and brighter states
             float baseIntensity = Mathf.Lerp(0.4f * initialPlayerLightIntensity, initialPlayerLightIntensity, staminaRatio);
-            if (isShiningBrighter)
-            {
-                playerLight.intensity = Mathf.Lerp(playerLight.intensity, baseIntensity * increaseIntensity, Time.deltaTime * 5f);
-            }
-            else
-            {
-                playerLight.intensity = Mathf.Lerp(playerLight.intensity, baseIntensity, Time.deltaTime * 5f);
-            }
+            playerLight.intensity = Mathf.Lerp(playerLight.intensity, isShiningBrighter ? baseIntensity * increaseIntensity : baseIntensity, Time.deltaTime * 5f);
 
-            // Adjust secondary light's intensity based on stamina, dimming to almost zero
+            // Adjust secondary light's intensity based on stamina
             if (secondaryLight != null)
             {
                 secondaryLight.intensity = Mathf.Lerp(0f, initialSecondaryLightIntensity, staminaRatio);
@@ -117,37 +109,19 @@ public class CandleMechanics : MonoBehaviour
     {
         if (isLightOn)
         {
-            if (isShiningBrighter)
-            {
-                playerMovement.currentStamina -= playerMovement.staminaDrainRate * 2.5f * Time.deltaTime; // Slightly slower drain when brighter
-            }
-            else
-            {
-                playerMovement.currentStamina -= playerMovement.staminaDrainRate * Time.deltaTime; // Normal drain
-            }
-
-            playerMovement.currentStamina = Mathf.Clamp(playerMovement.currentStamina, 0, playerMovement.maxStamina);
-        }
-        else
-        {
-            playerMovement.currentStamina += playerMovement.staminaRegenRate * Time.deltaTime;
-            playerMovement.currentStamina = Mathf.Clamp(playerMovement.currentStamina, 0, playerMovement.maxStamina);
+            float drainRate = isShiningBrighter ? playerMovement.staminaDrainRate * 2.5f : playerMovement.staminaDrainRate;
+            playerStats.ReduceStamina(drainRate * Time.deltaTime);
         }
     }
+
     public void IncreaseStamina(float amount)
     {
-    // Increase stamina, but don't exceed the maximum stamina
-    playerMovement.maxStamina = playerMovement.maxStamina + amount;
-    
-    // Update the light intensity immediately to reflect the stamina boost
-    UpdateFlameProperties();
+        playerStats.maxStamina += amount;
+        UpdateFlameProperties();
     }
 
     public void IncreaseRegen(float amount)
     {
-    // Increase stamina, but don't exceed the maximum stamina
-    playerMovement.staminaRegenRate = playerMovement.staminaRegenRate + amount;
-    
+        playerStats.staminaRegenRate += amount;
     }
-
 }
