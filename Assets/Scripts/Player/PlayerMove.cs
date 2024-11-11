@@ -41,6 +41,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        //Quit game
+        //REMOVE WHEN PAUSE BUTTON IMPLEMENTED
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         isGrounded = controller.isGrounded;
 
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
