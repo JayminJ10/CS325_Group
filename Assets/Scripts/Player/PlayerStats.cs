@@ -6,7 +6,7 @@ public class PlayerStats : MonoBehaviour
 {
     [SerializeField]
     private TitleCardManager titleCardManager;  // Reference to TitleCardManager
-    private bool alive;                         // Player life status
+    private bool alive = true;                  // Player life status
     public bool safe;                           // If player can be detected/attacked by enemy
     public float maxStamina = 100f;             // Maximum stamina
     public float currentStamina;                // Current stamina
@@ -17,38 +17,47 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        alive = true;
         safe = false;
         currentStamina = maxStamina;            // Initialize stamina to maximum at start
     }
 
     void Update()
-{
-    if (litCandleCounter > 0 && !isNearLitCandle)
     {
-        isNearLitCandle = true;
-    }
-    else if (litCandleCounter == 0 && isNearLitCandle)
-    {
-        isNearLitCandle = false;
-    }
+        if (!alive)
+        {
+            titleCardManager.ShowDeathCard();
+            return;
+        }
 
-    // Proceed with existing stamina regeneration logic
-    if (isNearLitCandle && currentStamina < maxStamina)
-    {
-        currentStamina += staminaRegenRate * Time.deltaTime;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-    }
-}
+        if (litCandleCounter > 0 && !isNearLitCandle)
+        {
+            isNearLitCandle = true;
+        }
+        else if (litCandleCounter == 0 && isNearLitCandle)
+        {
+            isNearLitCandle = false;
+        }
 
+        // Regenerate stamina only if near a lit candle and stamina is not full
+        if (isNearLitCandle && currentStamina < maxStamina)
+        {
+            currentStamina += staminaRegenRate * Time.deltaTime;
+            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        }
+
+        // Trigger death if stamina depletes completely
+        if (currentStamina <= 0 && alive)
+        {
+            Die();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("LitCandle")) // Assumes lit candles have the tag "LitCandle"
-        {   
+        if (other.CompareTag("LitCandle"))
+        {
             litCandleCounter++;
             isNearLitCandle = litCandleCounter > 0;
-
         }
         else if (other.CompareTag("Safe Zone"))
         {
@@ -62,7 +71,6 @@ public class PlayerStats : MonoBehaviour
         {
             litCandleCounter = Mathf.Max(0, litCandleCounter - 1);
             isNearLitCandle = litCandleCounter > 0;
-
         }
         else if (other.CompareTag("Safe Zone"))
         {
@@ -72,10 +80,18 @@ public class PlayerStats : MonoBehaviour
 
     public void IsHit()
     {
-        if (!safe)
+        if (!safe && alive)
         {
-            alive = false;
+            Debug.Log("Player has been hit by enemy.");
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        alive = false;
+        titleCardManager.ShowDeathCard();
+        Debug.Log("Player has died.");
     }
 
     // Method to reduce stamina (can be called from other scripts when player performs actions)
@@ -83,5 +99,9 @@ public class PlayerStats : MonoBehaviour
     {
         currentStamina -= amount;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        if (currentStamina <= 0 && alive)
+        {
+            Die();
+        }
     }
 }

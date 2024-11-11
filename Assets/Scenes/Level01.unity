@@ -13810,6 +13810,10 @@ PrefabInstance:
       propertyPath: chaseRangeMax
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 7726766849589268123, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
+      propertyPath: preAttackTimer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8894099745760554630, guid: ed9dbad027ff0124b85a1f7f20c510bb, type: 3}
       propertyPath: m_WalkableMask
       value: 1
