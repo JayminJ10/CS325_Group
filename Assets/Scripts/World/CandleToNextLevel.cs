@@ -42,39 +42,41 @@ public class CandleToNextLevel : MonoBehaviour
 
     // Method to light the candle and consume stamina
     void LightCandle()
+{
+    // Check if player has enough stamina to light the candle
+    if (playerStats.currentStamina >= staminaCost)
     {
-        // Check if player has enough stamina to light the candle
-        if (playerStats.currentStamina >= staminaCost)
+        // Enable the candle light and particle effect
+        if (candleLight != null)
         {
-            // Enable the candle light and particle effect
-            if (candleLight != null)
-            {
-                candleLight.enabled = true;
-            }
-            if (flameEffect != null)
-            {
-                flameEffect.Play();
-            }
+            candleLight.enabled = true;
+        }
+        if (flameEffect != null)
+        {
+            flameEffect.Play();
+        }
 
-            isCandleLit = true;
+        isCandleLit = true;
 
-            // Deduct stamina through PlayerStats
-            playerStats.ReduceStamina(staminaCost);
+        // Deduct stamina through PlayerStats
+        playerStats.ReduceStamina(staminaCost);
 
-            // Set this candle's position as the new spawn point
-            playerStats.transform.position = transform.position;
+        // Change the tag to "LitCandle" to allow PlayerStats to detect it for stamina regeneration
+        this.gameObject.tag = "LitCandle";
 
-            // Change the tag to "LitCandle" to allow PlayerStats to detect it for stamina regeneration
-            gameObject.tag = "LitCandle";
-
-            // Set isNearLitCandle to true immediately so stamina can start regenerating without re-entering
+        // Set isNearLitCandle to true immediately if player is within range
+        float distanceToPlayer = Vector3.Distance(transform.position, playerStats.transform.position);
+        if (distanceToPlayer <= interactionRange)
+        {
             playerStats.isNearLitCandle = true;
+        }
 
-            // Notify the CandleManager that this candle has been lit
-            if (candleManager != null)
-            {
-                candleManager.LightCandle();
-            }
+        // Notify the CandleManager that this candle has been lit
+        if (candleManager != null)
+        {
+            candleManager.LightCandle();
         }
     }
+}
+
 }

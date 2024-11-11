@@ -13,6 +13,8 @@ public class PlayerStats : MonoBehaviour
     public float staminaRegenRate = 5f;         // Rate of stamina regeneration
     public bool isNearLitCandle = false;        // Condition for stamina regen near lit candles
 
+    private int litCandleCounter = 0;           // Counter for nearby lit candles
+
     void Start()
     {
         alive = true;
@@ -21,32 +23,32 @@ public class PlayerStats : MonoBehaviour
     }
 
     void Update()
+{
+    if (litCandleCounter > 0 && !isNearLitCandle)
     {
-        if (!alive)
-        {
-            titleCardManager.ShowDeathCard();
-        }
-
-        // Regenerate stamina only if near a lit candle and stamina is not full
-        if (isNearLitCandle && currentStamina < maxStamina)
-        {
-            currentStamina += staminaRegenRate * Time.deltaTime;
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        }
-
-        // Check if stamina depletes entirely, causing player death
-        if (currentStamina <= 0 && alive)
-        {
-            alive = false;
-            titleCardManager.ShowDeathCard();
-        }
+        isNearLitCandle = true;
     }
+    else if (litCandleCounter == 0 && isNearLitCandle)
+    {
+        isNearLitCandle = false;
+    }
+
+    // Proceed with existing stamina regeneration logic
+    if (isNearLitCandle && currentStamina < maxStamina)
+    {
+        currentStamina += staminaRegenRate * Time.deltaTime;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+    }
+}
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("LitCandle")) // Assumes lit candles have the tag "LitCandle"
-        {
-            isNearLitCandle = true;
+        {   
+            litCandleCounter++;
+            isNearLitCandle = litCandleCounter > 0;
+
         }
         else if (other.CompareTag("Safe Zone"))
         {
@@ -58,7 +60,9 @@ public class PlayerStats : MonoBehaviour
     {
         if (other.CompareTag("LitCandle"))
         {
-            isNearLitCandle = false;
+            litCandleCounter = Mathf.Max(0, litCandleCounter - 1);
+            isNearLitCandle = litCandleCounter > 0;
+
         }
         else if (other.CompareTag("Safe Zone"))
         {
