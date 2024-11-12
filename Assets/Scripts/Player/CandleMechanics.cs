@@ -8,6 +8,11 @@ public class CandleMechanics : MonoBehaviour
     public Light playerLight;                    // Light in the flame particle system
     public Light secondaryLight;                 // Secondary light for player's face
 
+    [SerializeField] private AudioClip candleOn;
+    [SerializeField] private AudioClip candleOff;
+    private float defaultVolume = 0.7f;
+    private AudioSource audioSource;
+
     private float initialPlayerLightIntensity;    // Initial player light intensity
     private float initialSecondaryLightIntensity; // Initial secondary light intensity
 
@@ -20,6 +25,8 @@ public class CandleMechanics : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         if (flameEffect != null)
         {
             flameMainModule = flameEffect.main;
@@ -51,12 +58,14 @@ public class CandleMechanics : MonoBehaviour
 
             if (isLightOn)
             {
+                CandleOpenSound();
                 flameEffect.Play();
                 if (playerLight != null) playerLight.enabled = true;
                 if (secondaryLight != null) secondaryLight.enabled = true;
             }
             else
             {
+                CandleCloseSound();
                 flameEffect.Stop();
                 if (playerLight != null) playerLight.enabled = false;
                 if (secondaryLight != null) secondaryLight.enabled = false;
@@ -75,6 +84,26 @@ public class CandleMechanics : MonoBehaviour
             isShiningBrighter = false;
             increaseIntensity = 1f;
         }
+    }
+
+    //Update audio source settings to handle candle open audio
+    void CandleOpenSound()
+    {
+        audioSource.Pause();
+        audioSource.clip = candleOn;
+        audioSource.volume = defaultVolume * 1.1f;
+        audioSource.loop = false;
+        audioSource.Play();
+    }
+
+    //Update audio source settings to handle candle close audio
+    void CandleCloseSound()
+    {
+        audioSource.Pause();
+        audioSource.clip = candleOff;
+        audioSource.volume = defaultVolume * 0.7f;
+        audioSource.loop = false;
+        audioSource.Play();
     }
 
     void UpdateFlameProperties()
