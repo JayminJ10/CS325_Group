@@ -26,7 +26,6 @@ public class EnemyState : MonoBehaviour
     public float searchTimer = searchTimerMax;         //Duration of search state
     public bool playerLightOn;                         //Status of the player light
 
-    //TODO: REMOVE WHEN ANIMATIONS IMPLEMENTED
     public float preAttackTimer = preAttackTimerMax;   //Time until attack hits
     public float attackTimer = preAttackTimerMax-2;    //Time attack lasts
 
@@ -35,7 +34,6 @@ public class EnemyState : MonoBehaviour
 
     private bool playerSafe;                           //Ref to player safe state
 
-    //TODO: REMOVE WHEN ANIMATIONS IMPLEMENTED
     private Collider attackCol;                        //Store reference to attack collider
 
     void Start()
@@ -64,7 +62,6 @@ public class EnemyState : MonoBehaviour
         //Attack state, overrules all other conditions
         if (state == State.ATTACK)
         {
-            ////TODO: REFACTOR WHEN ANIMATIONS IMPLEMENTED
             Debug.DrawRay(transform.position, (playerPos - transform.position), Color.red);
             preAttackTimer = (preAttackTimer <= 0) ? 0 : preAttackTimer - 1 * Time.deltaTime;
             if (preAttackTimer <= 0)

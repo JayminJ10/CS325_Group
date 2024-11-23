@@ -13,9 +13,6 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 startPos;                 //Starting position
     private int currentWaypoint;              //Waypoint currently navigating to
     private NavMeshAgent agent;               //Nav mesh controller
-    
-    //TODO: REMOVE WHEN ANIMATION IMPLEMENTED
-    private Material attackVisualMat;         //Reference to child attack range obj material
 
     [SerializeField]
     private List<Transform> waypoints;        //Waypoints to navigate to
@@ -26,9 +23,6 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //TODO: REMOVE WHEN ANIMATION IMPLEMENTED
-        attackVisualMat = transform.Find("Attack Hitbox Visual").gameObject.GetComponent<Renderer>().material;
-        
         currentState = GetComponent<EnemyState>().state;
         startPos = transform.position;
         //Ensure speed is relative to player speed
@@ -39,9 +33,6 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //TODO: REMOVE WHEN ANIMATION IMPLEMENTED
-        Color color;
-
         currentState = GetComponent<EnemyState>().state;
         //Change movement depending on current state
         switch (currentState) {
@@ -49,11 +40,6 @@ public class EnemyMovement : MonoBehaviour
             case State.WANDER:
             case State.SEEK:
             case State.SEARCH:
-                //Change material to default
-                //TODO: REMOVE WHEN ANIMATION IMPLEMENTED
-                color = new Color(0, 255, 0, 0.8f);
-                attackVisualMat.color = color;
-
                 //Change speed depending on state
                 switch(currentState){
                     case State.WANDER:
@@ -75,22 +61,12 @@ public class EnemyMovement : MonoBehaviour
 
             //Free movement cases
             case State.CHASE:
-                //Change attackVis material
-                //TODO: REMOVE WHEN ANIMATION IMPLEMENTED
-                color = new Color(255, 120, 0, 0.8f);
-                attackVisualMat.color = color;
-
                 agent.speed = speedMax * 1.8f;
                 agent.destination = player.transform.position;
                 FindNearestWaypoint();
                 break;
 
             case State.ATTACK:
-                //Change attackVis material
-                //TODO: REMOVE WHEN ANIMATION IMPLEMENTED
-                color = new Color(255, 0, 0, 0.8f);
-                attackVisualMat.color = color;
-
                 //Stop moving, slowly turn to face player while winding up attack
                 agent.speed = 0;
                 if (!GetComponent<BoxCollider>().enabled)
@@ -101,7 +77,6 @@ public class EnemyMovement : MonoBehaviour
                     transform.rotation = Quaternion.Lerp(transform.rotation, LookAtRotationOnly_Y, 1.75f * Time.deltaTime);
 
                 }
-                
                 FindNearestWaypoint();
                 break;
         }
