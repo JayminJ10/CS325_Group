@@ -1,15 +1,17 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CandleManager : MonoBehaviour
 {
-    public int totalCandles;  // Total number of candles in the level
-    private int candlesLit = 0;  // Number of candles lit by the player
-
+    public List<CandleToNextLevel> candles;  // List of all candles in the level
     public TextMeshProUGUI candlesLitText;  // Reference to the UI text to display progress
     public GameObject candleCounterUI;      // The UI that shows the number of candles lit
     public TitleCardManager titleCardManager;  // Reference to the TitleCardManager script
+    public EnemyCandleExtinguisher enemy;   // Reference to the enemy script
+    public float nextLevelDelay = 3f;       // Time delay before transitioning to the next level
+    public string nextLevelSceneName;       // Name of the next level scene
 
     public float litTextDisplayTime = 3f;   // Time to display the "Candles Lit" text
 
@@ -20,45 +22,56 @@ public class CandleManager : MonoBehaviour
         candleCounterUI.SetActive(false);
     }
 
-    // This method should be called whenever a candle is lit
-    public void LightCandle()
+    public void UpdateCandleUI()
     {
-        candlesLit++;
-        UpdateCandleUI();
-
-        // Check if all candles are lit
-        if (candlesLit >= totalCandles)
+        int currentlyLit = 0;
+        foreach (CandleToNextLevel candle in candles)
         {
-            // Wait for a few seconds and then trigger the end card through the TitleCardManager
-            StartCoroutine(TriggerEndCard());
+            if (candle.IsLit)
+            {
+                currentlyLit++;
+            }
+        }
+
+        candleCounterUI.SetActive(true);  // Show the UI
+        candlesLitText.text = $"Candles Lit: {currentlyLit}/{candles.Count}";
+        StartCoroutine(HideCandleCounterAfterDelay());
+
+        // If all candles are lit, trigger level completion
+        if (currentlyLit == candles.Count)
+        {
+            StopEnemy();
+            StartCoroutine(TransitionToNextLevel());
         }
     }
 
-    // Update the candle count UI
-    private void UpdateCandleUI()
+    private void StopEnemy()
     {
-        candleCounterUI.SetActive(true);  // Show the UI
-        candlesLitText.text = $"Candles Lit: {candlesLit}/{totalCandles}";
-        StartCoroutine(HideCandleCounterAfterDelay());
+        if (enemy != null)
+        {
+            enemy.enabled = false; // Disable the enemy's behavior script
+            Debug.Log("Enemy has been stopped!");
+        }
     }
 
-    // Hide the candle count UI after a few seconds
     private IEnumerator HideCandleCounterAfterDelay()
     {
         yield return new WaitForSeconds(litTextDisplayTime);
         candleCounterUI.SetActive(false);
     }
 
-    // Coroutine to trigger the end card after all candles are lit
-    private IEnumerator TriggerEndCard()
+    private IEnumerator TransitionToNextLevel()
     {
-        // Wait for the candle lit text to disappear
-        yield return new WaitForSeconds(litTextDisplayTime);
+        yield return new WaitForSeconds(nextLevelDelay);
 
-        // Call the TitleCardManager to show the end card and transition to the next level
         if (titleCardManager != null)
         {
-            titleCardManager.ShowEndCard();  // Trigger the end card in the TitleCardManager
+            titleCardManager.ShowEndCard();  // Display the next level card
         }
+
+        yield return new WaitForSeconds(2f);  // Optional extra delay for the end card
+
+        // Load the next level scene
+        UnityEngine.SceneManagement.SceneManager.LoadScene(nextLevelSceneName);
     }
 }

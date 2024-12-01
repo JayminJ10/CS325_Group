@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,20 +5,19 @@ public class PlayerStats : MonoBehaviour
 {
     [SerializeField]
     private TitleCardManager titleCardManager;  // Reference to TitleCardManager
-    private bool alive = true;                  // Player life status
-    public bool safe;                           // If player can be detected/attacked by enemy
-    public float maxStamina = 100f;             // Maximum stamina
-    public float currentStamina;                // Current stamina
-    public float staminaRegenRate = 5f;         // Rate of stamina regeneration
-    public float proximityRange = 5f;          // Range to check proximity to lit candles
-    public bool isNearLitCandle = false;  
+    private bool alive = true;                 // Player life status
+    public float maxStamina = 100f;            // Maximum stamina
+    public float currentStamina;               // Current stamina
+    public float staminaRegenRate = 5f;        // Rate of stamina regeneration
+
+    public bool safe;
+    [SerializeField] private float proximityRange = 5f;  // Range to check proximity to lit candles
+    public bool isNearLitCandle = false;       // Condition for stamina regen near lit candles
 
     private List<Transform> litCandles = new List<Transform>(); // List of lit candles
 
-
     void Start()
     {
-        safe = false;
         currentStamina = maxStamina;            // Initialize stamina to maximum at start
     }
 
@@ -56,7 +54,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-   // Register a lit candle in the list
+    // Register a lit candle in the list
     public void RegisterLitCandle(Transform candleTransform)
     {
         if (!litCandles.Contains(candleTransform))
@@ -65,7 +63,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    // Unregister a lit candle (optional for advanced use)
+    // Unregister a lit candle
     public void UnregisterLitCandle(Transform candleTransform)
     {
         if (litCandles.Contains(candleTransform))
@@ -74,6 +72,15 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void ReduceStamina(float amount)
+    {
+        currentStamina -= amount;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        if (currentStamina <= 0 && alive)
+        {
+            Die();
+        }
+    }
     public void IsHit(string enemyType, int damage)
     {
         if (string.Equals(enemyType, "Spider") && alive) {
@@ -92,16 +99,5 @@ public class PlayerStats : MonoBehaviour
         alive = false;
         titleCardManager.ShowDeathCard();
         Debug.Log("Player has died.");
-    }
-
-    // Method to reduce stamina (can be called from other scripts when player performs actions)
-    public void ReduceStamina(float amount)
-    {
-        currentStamina -= amount;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        if (currentStamina <= 0 && alive)
-        {
-            Die();
-        }
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CandleToNextLevel : MonoBehaviour
 {
@@ -11,8 +10,6 @@ public class CandleToNextLevel : MonoBehaviour
     public ParticleSystem flameEffect;         // Particle System for the flame effect
     public float staminaCost = 10f;            // Stamina cost to light the candle
     public float interactionRange = 2f;        // Distance within which the player can interact with the candle
-
-    private bool isCandleLit = false;          // Track if the candle is already lit
 
     void Start()
     {
@@ -33,65 +30,64 @@ public class CandleToNextLevel : MonoBehaviour
         // Check if the player is close enough and presses "E", and the candle is not yet lit
         float distanceToPlayer = Vector3.Distance(transform.position, playerStats.transform.position);
 
-        if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E) && !isCandleLit && playerStats.currentStamina >= staminaCost)
+        if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E) && !IsLit && playerStats.currentStamina >= staminaCost)
         {
             LightCandle();
         }
-
-        // Update player’s near lit candle status if candle is lit and within range
-        playerStats.isNearLitCandle = isCandleLit && distanceToPlayer <= interactionRange;
     }
 
-    // Method to light the candle and consume stamina
-    void LightCandle()
+    public void LightCandle()
     {
-    // Check if player has enough stamina to light the candle
-    if (playerStats.currentStamina >= staminaCost)
-    {
-        // Enable the candle light and particle effect
-        if (candleLight != null)
+        if (playerStats.currentStamina >= staminaCost)
         {
-            candleLight.enabled = true;
+            // Enable the candle light and particle effect
+            if (candleLight != null)
+            {
+                candleLight.enabled = true;
+            }
+            if (flameEffect != null)
+            {
+                flameEffect.Play();
+            }
+
+            IsLit = true;
+
+            // Deduct stamina through PlayerStats
+            playerStats.ReduceStamina(staminaCost);
+
+            // Notify the CandleManager
+            if (candleManager != null)
+            {
+                candleManager.UpdateCandleUI();
+            }
+
+            // Register the lit candle with PlayerStats
+            playerStats.RegisterLitCandle(this.transform);
+
+            Debug.Log($"{gameObject.name} is now lit!");
         }
-        if (flameEffect != null)
-        {
-            flameEffect.Play();
-        }
-
-        isCandleLit = true;
-        IsLit = true;
-
-        // Deduct stamina through PlayerStats
-        playerStats.ReduceStamina(staminaCost);
-
-        // Notify the CandleManager that this candle has been lit
-        if (candleManager != null)
-        {
-            candleManager.LightCandle();
-        }
-
-         playerStats.RegisterLitCandle(this.transform);
     }
-    }
+
     public void TurnOffCandle()
     {
         if (IsLit)
         {
+            IsLit = false;
+
             // Disable the candle light and particle effect
-            if (candleLight != null)
+            if (candleLight != null) candleLight.enabled = false;
+            if (flameEffect != null) flameEffect.Stop();
+
+            // Notify the CandleManager
+            if (candleManager != null)
             {
-                candleLight.enabled = false;
-            }
-            if (flameEffect != null)
-            {
-                flameEffect.Stop();
+                candleManager.UpdateCandleUI();
             }
 
-            // Mark the candle as not lit
-            IsLit = false;
+            // Unregister the candle from PlayerStats
+            playerStats.UnregisterLitCandle(this.transform);
 
             Debug.Log($"{gameObject.name} has been turned off!");
         }
     }
-
 }
