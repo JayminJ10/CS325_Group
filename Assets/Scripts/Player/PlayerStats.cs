@@ -78,8 +78,12 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void IsHit()
+    public void IsHit(string enemyType, int damage)
     {
+        if (string.Equals(enemyType, "Spider") && alive) {
+            ReduceStamina(damage);
+            return;
+        }
         if (!safe && alive)
         {
             Debug.Log("Player has been hit by enemy.");

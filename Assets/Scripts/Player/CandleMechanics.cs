@@ -153,4 +153,10 @@ public class CandleMechanics : MonoBehaviour
     {
         playerStats.staminaRegenRate += amount;
     }
+
+    //Getter for player light status, used by defeatable enemies.
+    public bool IsShiningBrighter()
+    {
+        return isShiningBrighter;
+    }
 }

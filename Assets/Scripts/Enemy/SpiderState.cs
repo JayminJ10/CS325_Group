@@ -27,13 +27,17 @@ public class SpiderState : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         state = SimpleState.IDLE;
         maxChaseDist = 20f;
-        maxAttackDist = 3f;
+        maxAttackDist = 3.6f;
         attackCooldown = attackCoownMax;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!GetComponent<SpiderMovement>().IsAlive())
+        {
+            return;
+        }
         Vector3 playerPos = player.GetComponent<Transform>().position;
         distToPlayer = Vector3.Distance(transform.position, playerPos);
 
@@ -49,16 +53,23 @@ public class SpiderState : MonoBehaviour
         }
 
         //Attack state
-        if (distToPlayer <= maxAttackDist && hit.collider.CompareTag("Player") && attackCooldown <= 0)
+        if (distToPlayer <= maxAttackDist && attackCooldown <= 0)
         {
-            state = SimpleState.ATTACK;
-            attackCooldown = attackCoownMax;
+            if(hit.collider.CompareTag("Player"))
+            {
+                state = SimpleState.ATTACK;
+                attackCooldown = attackCoownMax;
+            }
+            
         }
 
         //Chase state
-        else if (distToPlayer <= maxChaseDist && hit.collider.CompareTag("Player"))
+        else if (distToPlayer <= maxChaseDist)
         {
-            state = SimpleState.CHASE;
+            if (hit.collider.CompareTag("Player"))
+            {
+                state = SimpleState.CHASE;
+            }
         }
 
         //Idle state
