@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class CandleToNextLevel : MonoBehaviour
 {
+    public bool IsLit { get; private set; } = false; // Track if the candle is lit
+
     public CandleManager candleManager;        // Reference to the CandleManager to track progress
     public PlayerStats playerStats;            // Reference to PlayerStats for stamina handling
     public Light candleLight;                  // Light component of the candle
@@ -42,7 +44,7 @@ public class CandleToNextLevel : MonoBehaviour
 
     // Method to light the candle and consume stamina
     void LightCandle()
-{
+    {
     // Check if player has enough stamina to light the candle
     if (playerStats.currentStamina >= staminaCost)
     {
@@ -57,28 +59,39 @@ public class CandleToNextLevel : MonoBehaviour
         }
 
         isCandleLit = true;
+        IsLit = true;
 
         // Deduct stamina through PlayerStats
         playerStats.ReduceStamina(staminaCost);
-
-        // Change the tag to "LitCandle" to allow PlayerStats to detect it for stamina regeneration
-        this.gameObject.tag = "LitCandle";
-
-        // Set isNearLitCandle to true immediately if player is within range
-        float distanceToPlayer = Vector3.Distance(transform.position, playerStats.transform.position);
-        if (distanceToPlayer <= interactionRange)
-        {
-            playerStats.isNearLitCandle = true;
-        }
 
         // Notify the CandleManager that this candle has been lit
         if (candleManager != null)
         {
             candleManager.LightCandle();
         }
-        
+
          playerStats.RegisterLitCandle(this.transform);
     }
-}
+    }
+    public void TurnOffCandle()
+    {
+        if (IsLit)
+        {
+            // Disable the candle light and particle effect
+            if (candleLight != null)
+            {
+                candleLight.enabled = false;
+            }
+            if (flameEffect != null)
+            {
+                flameEffect.Stop();
+            }
+
+            // Mark the candle as not lit
+            IsLit = false;
+
+            Debug.Log($"{gameObject.name} has been turned off!");
+        }
+    }
 
 }

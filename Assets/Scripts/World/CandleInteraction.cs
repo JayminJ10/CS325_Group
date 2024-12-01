@@ -46,4 +46,7 @@ public class CandleInteraction : MonoBehaviour
             Debug.Log("Candle lit, spawn point set to candle position: " + transform.position);
         }
     }
+
+    public bool IsLit { get { return isCandleLit; } }
+
 }
