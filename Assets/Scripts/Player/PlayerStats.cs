@@ -11,9 +11,11 @@ public class PlayerStats : MonoBehaviour
     public float maxStamina = 100f;             // Maximum stamina
     public float currentStamina;                // Current stamina
     public float staminaRegenRate = 5f;         // Rate of stamina regeneration
-    public bool isNearLitCandle = false;        // Condition for stamina regen near lit candles
+    public float proximityRange = 5f;          // Range to check proximity to lit candles
+    public bool isNearLitCandle = false;  
 
-    private int litCandleCounter = 0;           // Counter for nearby lit candles
+    private List<Transform> litCandles = new List<Transform>(); // List of lit candles
+
 
     void Start()
     {
@@ -29,16 +31,18 @@ public class PlayerStats : MonoBehaviour
             return;
         }
 
-        if (litCandleCounter > 0 && !isNearLitCandle)
+        // Dynamically check proximity to lit candles
+        isNearLitCandle = false;
+        foreach (Transform candle in litCandles)
         {
-            isNearLitCandle = true;
-        }
-        else if (litCandleCounter == 0 && isNearLitCandle)
-        {
-            isNearLitCandle = false;
+            if (Vector3.Distance(transform.position, candle.position) <= proximityRange)
+            {
+                isNearLitCandle = true;
+                break;
+            }
         }
 
-        // Regenerate stamina only if near a lit candle and stamina is not full
+        // Regenerate stamina if near a lit candle
         if (isNearLitCandle && currentStamina < maxStamina)
         {
             currentStamina += staminaRegenRate * Time.deltaTime;
@@ -52,29 +56,21 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+   // Register a lit candle in the list
+    public void RegisterLitCandle(Transform candleTransform)
     {
-        if (other.CompareTag("LitCandle"))
+        if (!litCandles.Contains(candleTransform))
         {
-            litCandleCounter++;
-            isNearLitCandle = litCandleCounter > 0;
-        }
-        else if (other.CompareTag("Safe Zone"))
-        {
-            safe = true;
+            litCandles.Add(candleTransform);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    // Unregister a lit candle (optional for advanced use)
+    public void UnregisterLitCandle(Transform candleTransform)
     {
-        if (other.CompareTag("LitCandle"))
+        if (litCandles.Contains(candleTransform))
         {
-            litCandleCounter = Mathf.Max(0, litCandleCounter - 1);
-            isNearLitCandle = litCandleCounter > 0;
-        }
-        else if (other.CompareTag("Safe Zone"))
-        {
-            safe = false;
+            litCandles.Remove(candleTransform);
         }
     }
 

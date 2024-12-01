@@ -76,6 +76,8 @@ public class CandleToNextLevel : MonoBehaviour
         {
             candleManager.LightCandle();
         }
+        
+         playerStats.RegisterLitCandle(this.transform);
     }
 }
 
