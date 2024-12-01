@@ -380,6 +380,8 @@ MonoBehaviour:
   flameEffect: {fileID: 407368783}
   playerLight: {fileID: 1585395453}
   secondaryLight: {fileID: 694339590}
+  candleOn: {fileID: 0}
+  candleOff: {fileID: 0}
 --- !u!111 &65381150
 Animation:
   m_ObjectHideFlags: 0
@@ -513,10 +515,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleCardManager: {fileID: 833380109}
-  safe: 0
   maxStamina: 100
   currentStamina: 100
   staminaRegenRate: 15
+  safe: 0
+  proximityRange: 5
   isNearLitCandle: 0
 --- !u!1 &71254073
 GameObject:
@@ -6333,6 +6336,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545736323}
   m_CullTransparentMesh: 1
+--- !u!114 &589990395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4538278327086367437, guid: 127cb62e853f9ec44b9e8a7a9810023d, type: 3}
+  m_PrefabInstance: {fileID: 2137840509}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e054aaf57af10e4fb7b105652236971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &673181527
 GameObject:
   m_ObjectHideFlags: 0
@@ -7828,10 +7842,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1d119825603c046ac51e22f4a00fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCandles: 1
+  candles:
+  - {fileID: 589990395}
   candlesLitText: {fileID: 1998447700}
   candleCounterUI: {fileID: 466259668}
   titleCardManager: {fileID: 833380109}
+  enemy: {fileID: 0}
+  nextLevelDelay: 3
+  nextLevelSceneName: Level01
   litTextDisplayTime: 3
 --- !u!4 &1877038509
 Transform:
