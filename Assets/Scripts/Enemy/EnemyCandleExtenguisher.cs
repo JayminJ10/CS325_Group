@@ -16,6 +16,12 @@ public class EnemyCandleExtinguisher : MonoBehaviour
     private CandleToNextLevel targetCandle; // Current candle the enemy is targeting
     private bool isExtinguishing = false;   // Whether the enemy is currently extinguishing a candle
 
+    [Header("Visual Settings")]
+    public Material defaultEyeMaterial; // Default material for the eyes
+    public Material glowingRedMaterial; // Glowing red material for the eyes
+    public List<Renderer> eyeRenderers; // List of Renderers for the enemy's eyes
+
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -47,14 +53,44 @@ public class EnemyCandleExtinguisher : MonoBehaviour
             // If no candle is targeted, patrol randomly
             PatrolRandomly();
         }
+
+        // Make the enemy face the direction they are moving
+        FaceMovementDirection();
     }
+
+    private void FaceMovementDirection()
+    {
+        // Get the velocity of the agent
+        Vector3 velocity = agent.velocity;
+
+        // Ignore small movements
+        if (velocity.sqrMagnitude > 0.1f)
+        {
+            // Calculate the direction the agent is moving
+            Vector3 direction = velocity.normalized;
+
+            // Update the rotation to face the direction of movement
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f); // Smooth rotation
+        }
+    }
+
+    private void SetEyeMaterial(Material material)
+    {
+        foreach (Renderer renderer in eyeRenderers)
+        {
+            renderer.material = material;
+        }
+    }
+
 
     private void FindNextTarget()
     {
         // Skip if the enemy is already targeting or extinguishing a candle
         if (isExtinguishing) return;
 
-        // Find the nearest lit candle
+        bool anyLitCandle = false; // Track if any candle is lit
         float closestDistance = float.MaxValue;
         targetCandle = null;
 
@@ -62,6 +98,7 @@ public class EnemyCandleExtinguisher : MonoBehaviour
         {
             if (candle.IsLit)
             {
+                anyLitCandle = true; // A lit candle was found
                 float distance = Vector3.Distance(transform.position, candle.transform.position);
                 if (distance < closestDistance)
                 {
@@ -71,12 +108,55 @@ public class EnemyCandleExtinguisher : MonoBehaviour
             }
         }
 
+        // Change eye material based on candle states
+        if (anyLitCandle)
+        {
+            StartCoroutine(SmoothEyeMaterialTransition(glowingRedMaterial, 0.5f)); // For glowing
+        }
+        else
+        {
+            StartCoroutine(SmoothEyeMaterialTransition(defaultEyeMaterial, 0.5f)); // For reverting
+        }
+
         // If no lit candles are found, keep patrolling
         if (targetCandle == null)
         {
             PatrolRandomly();
         }
     }
+
+    private IEnumerator SmoothEyeMaterialTransition(Material targetMaterial, float duration)
+    {
+        // Get the current material of the first eye (assuming all eyes have the same material)
+        Material currentMaterial = eyeRenderers[0].material;
+        float elapsed = 0f;
+
+        // Uniformly transition all eyes
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            // Lerp between the current material and the target material
+            Material lerpedMaterial = new Material(currentMaterial);
+            lerpedMaterial.Lerp(currentMaterial, targetMaterial, elapsed / duration);
+
+            // Apply the same lerped material to all eyes
+            foreach (Renderer renderer in eyeRenderers)
+            {
+                renderer.material = lerpedMaterial;
+            }
+
+            yield return null;
+        }
+
+        // Ensure all eyes have the final material after the transition
+        foreach (Renderer renderer in eyeRenderers)
+        {
+            renderer.material = targetMaterial;
+        }
+    }
+
+
 
     private IEnumerator ExtinguishCandle(CandleToNextLevel candle)
     {
