@@ -694,11 +694,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wanderman
       objectReference: {fileID: 0}
+    - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: candleOn
+      value: 
+      objectReference: {fileID: 8300000, guid: 14986197ecde98244b4d9749e28db711, type: 3}
+    - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: candleOff
+      value: 
+      objectReference: {fileID: 8300000, guid: 07b525dfd6acb2443a2ab26f7e4681d2, type: 3}
+    - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 1121772864}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+--- !u!114 &1121772864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6643169433532071901, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+  m_PrefabInstance: {fileID: 1121772863}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680889abc591aa040a13f9c06747ebf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1132944731
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,13 @@ public class EnemyCandleExtinguisher : MonoBehaviour
     public Material glowingRedMaterial; // Glowing red material for the eyes
     public List<Renderer> eyeRenderers; // List of Renderers for the enemy's eyes
 
+    [Header("Audio Settings")]
+    public AudioClip candleExtinguishedSound; // Sound played when a candle is extinguished
+    public AudioSource audioSource;        // AudioSource component for playing sounds
+    
+    
+
+
 
     void Start()
     {
@@ -108,6 +115,7 @@ public class EnemyCandleExtinguisher : MonoBehaviour
             }
         }
 
+
         // Change eye material based on candle states
         if (anyLitCandle)
         {
@@ -170,6 +178,12 @@ public class EnemyCandleExtinguisher : MonoBehaviour
         if (candle.IsLit)
         {
             candle.TurnOffCandle();
+
+            // Play the candle extinguished sound
+            if (audioSource != null && candleExtinguishedSound != null)
+            {
+                audioSource.PlayOneShot(candleExtinguishedSound);
+            }
         }
 
         isExtinguishing = false;
