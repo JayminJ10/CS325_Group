@@ -55,12 +55,14 @@ public class SpiderMovement : MonoBehaviour
                 break;
             case SimpleState.CHASE:
                 isAlive = !player.GetComponent<CandleMechanics>().IsShiningBrighter();
+                LookAtPlayer();
                 agent.destination = playerPos;
                 startPos = transform.position;
                 agent.speed = SetSpeed();
                 break;
             case SimpleState.ATTACK:
                 isAlive = !player.GetComponent<CandleMechanics>().IsShiningBrighter();
+                LookAtPlayer();
                 agent.destination = playerPos;
                 agent.speed = SetSpeed();
                 Attack();
@@ -134,5 +136,13 @@ public class SpiderMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         GameObject.Destroy(gameObject);
+    }
+
+    private void LookAtPlayer()
+    {
+        Vector3 relativePos = player.transform.position - transform.position;
+        Quaternion LookAtRotation = Quaternion.LookRotation(relativePos);
+        Quaternion LookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, LookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        transform.rotation = Quaternion.Lerp(transform.rotation, LookAtRotationOnly_Y, 1.75f * Time.deltaTime);
     }
 }
