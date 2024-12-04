@@ -332,6 +332,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42394002}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &46619295
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1757962170298645716, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_Name
+      value: BGM
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.444874
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.3746777
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.823088
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052112798180584718, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb16a84631289e24aa21c8ffe6140060, type: 3}
 --- !u!1001 &58504994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16616,6 +16673,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2295820793245853925, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6994254187063003895, guid: cc8c6e5828040ad48a11a61e4d38ecc0, type: 2}
     - target: {fileID: 2305721683624742257, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -16805,6 +16866,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8256796701731144533, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: walkSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9b2819052eec86c459e240cdaae646aa, type: 3}
+    - target: {fileID: 8256796701731144533, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: playerStats
       value: 
       objectReference: {fileID: 5846926236404042298}
@@ -16917,7 +16982,7 @@ AudioSource:
   m_GameObject: {fileID: 5846926236404042291}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6994254187063003895, guid: cc8c6e5828040ad48a11a61e4d38ecc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -17036,3 +17101,4 @@ SceneRoots:
   - {fileID: 850509899}
   - {fileID: 676182370}
   - {fileID: 994718068}
+  - {fileID: 46619295}

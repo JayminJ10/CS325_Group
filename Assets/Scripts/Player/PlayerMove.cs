@@ -30,8 +30,15 @@ public class PlayerMovement : MonoBehaviour
 
     private Animation anim;
 
+    AudioSource audioSource;
+    [SerializeField] private AudioClip walkSound;
+    private float defaultVolume = 0.9f;
+    private float footstepTimer = 0.0f;
+    private float footstepInterval = 0.8f;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
         anim = GetComponent<Animation>();
@@ -68,6 +75,22 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded && !anim.IsPlaying("Walk") && !hasJumped)
             {
                 anim.CrossFade("Walk");
+                WalkSound();
+            }
+            // Play walking sound with interval
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0f && isGrounded)
+            {
+                WalkSound();
+                footstepTimer = footstepInterval; // Reset the timer
+            }
+        }
+        else
+        {
+            // Stop walking sound if player is idle
+            if (audioSource.isPlaying && audioSource.clip == walkSound)
+            {
+                audioSource.Stop();
             }
         }
 
@@ -141,6 +164,18 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < fallThreshold)
         {
             RespawnPlayer();
+        }
+    }
+
+    void WalkSound()
+    {
+        //audioSource.Pause();
+        //audioSource.clip = walkSound;
+        //audioSource.volume = defaultVolume * 1.1f;
+        //audioSource.loop = true;
+        //audioSource.Play();
+        if (!audioSource.isPlaying || audioSource.clip != walkSound) {
+            audioSource.PlayOneShot(walkSound, defaultVolume * 1.0f);
         }
     }
 
