@@ -958,6 +958,7 @@ GameObject:
   - component: {fileID: 142289117}
   - component: {fileID: 142289116}
   - component: {fileID: 142289115}
+  - component: {fileID: 142289119}
   m_Layer: 0
   m_Name: SafeZone
   m_TagString: Safe Zone
@@ -1045,12 +1046,26 @@ Transform:
   m_GameObject: {fileID: 142289114}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 106, y: 0.92, z: 64.4}
+  m_LocalPosition: {x: 106, y: 0.43, z: 64.4}
   m_LocalScale: {x: 14.4411, y: 4.4985, z: 9.3899}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &142289119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142289114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a8a67f33037574b869dd625e569edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  safe: 0
 --- !u!1 &144557122
 GameObject:
   m_ObjectHideFlags: 0
@@ -7070,6 +7085,7 @@ GameObject:
   - component: {fileID: 1319639465}
   - component: {fileID: 1319639464}
   - component: {fileID: 1319639463}
+  - component: {fileID: 1319639467}
   m_Layer: 0
   m_Name: SafeZone 2
   m_TagString: Safe Zone
@@ -7157,12 +7173,26 @@ Transform:
   m_GameObject: {fileID: 1319639462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 95.4, y: 0.92, z: 3.3}
+  m_LocalPosition: {x: 95.4, y: 0.84, z: 3.3}
   m_LocalScale: {x: 38.55774, y: 4.4985, z: 16.46613}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1319639467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319639462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a8a67f33037574b869dd625e569edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  safe: 0
 --- !u!1 &1337233412
 GameObject:
   m_ObjectHideFlags: 0
@@ -7841,8 +7871,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.8784314, g: 0.6862745, b: 0.31764707, a: 1}
-  m_Intensity: 0.5
-  m_Range: 15
+  m_Intensity: 0.75
+  m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -7886,7 +7916,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.02e-43, y: 7.4e-44, z: 7.79e-42, w: -3.0787472e+29}
+  m_BoundingSphereOverride: {x: 1.092e-42, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -8577,8 +8607,8 @@ Transform:
   m_GameObject: {fileID: 1599995495}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 36.2, z: -81.3}
-  m_LocalScale: {x: 138.92963, y: 1, z: 82.27063}
+  m_LocalPosition: {x: 0, y: 36.2, z: -63.7}
+  m_LocalScale: {x: 138.92963, y: 1, z: 119.27596}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2131051463}
@@ -8876,6 +8906,7 @@ GameObject:
   - component: {fileID: 1711064320}
   - component: {fileID: 1711064319}
   - component: {fileID: 1711064318}
+  - component: {fileID: 1711064322}
   m_Layer: 0
   m_Name: SafeZone 3
   m_TagString: Safe Zone
@@ -8969,6 +9000,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1711064322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711064317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a8a67f33037574b869dd625e569edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  safe: 0
 --- !u!1 &1720724857
 GameObject:
   m_ObjectHideFlags: 0
@@ -16844,6 +16889,10 @@ PrefabInstance:
     - target: {fileID: 7099999027836886079, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7168117610040081995, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7701616253049671167, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: m_Layer
