@@ -42,7 +42,8 @@ In Wander Light, your mission is to light all the candles scattered throughout t
 ## Controls
 
 - **Movement**: `W` (Forward), `A` (Left), `S` (Backward), `D` (Right)  
-- **Jump**: `Spacebar`  
+- **Jump**: `Spacebar`
+- **Dash**: `LeftShift`
 - **Toggle Flashlight**: `F`  
 - **Flash Light (Spider Kill)**: Left Mouse Button  
 - **Interact**: `E`  
