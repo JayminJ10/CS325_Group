@@ -826,6 +826,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wanderman
       objectReference: {fileID: 0}
+    - target: {fileID: 8256796701731144533, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1901352182}
     - target: {fileID: 8536822135376597233, guid: 6e5face1b1c015440bbdcb29e34f8387, type: 3}
       propertyPath: candleOn
       value: 
@@ -1649,6 +1653,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1901352182 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8115813451770620377, guid: 6d77d3bcf5200954ca24b92109cca9b7, type: 3}
+  m_PrefabInstance: {fileID: 1806216784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1981151835
 GameObject:
   m_ObjectHideFlags: 0
