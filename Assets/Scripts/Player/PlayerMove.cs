@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private float footstepTimer = 0.0f;
     private float footstepInterval = 0.8f;
 
+    [SerializeField] private GameObject pauseMenu;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -48,11 +50,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //Quit game
-        //REMOVE WHEN PAUSE BUTTON IMPLEMENTED
+        //Pause Game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            if (pauseMenu.activeInHierarchy)
+            {
+                pauseMenu.GetComponent<PauseMenu>().ContinueGame();
+            }
+            else
+            {
+                pauseMenu.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0f;
+            }
         }
 
         isGrounded = controller.isGrounded;
