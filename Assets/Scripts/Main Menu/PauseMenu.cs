@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("Quit game");
-        Application.Quit();  // Quit the game (won't work in the editor)
+        Debug.Log("Quit to main menu");
+        SceneManager.LoadScene("MainMenu");
     }
 }
